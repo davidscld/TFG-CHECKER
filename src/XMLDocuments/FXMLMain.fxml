@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.icons525.Icons525View?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="667.0" prefWidth="869.0" style="-fx-background-color: #00796B;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="Controllers.FXMLMainController">
+   <children>
+      <Icons525View fill="YELLOW" glyphName="USER" layoutX="310.0" layoutY="301.0" size="250.0" />
+   </children>
+</AnchorPane>
