@@ -23,7 +23,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Logica l = new Logica(primaryStage);
+       Logica l = new Logica(primaryStage);
     }
 
 }
