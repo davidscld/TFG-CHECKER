@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import static Clases.Main.scene;
 
 /**
  *
@@ -18,6 +17,7 @@ import static Clases.Main.scene;
  */
 public class Logica {
 
+    public Scene scene;
     private Stage stage;
     private Parent vistaFirma = FXMLLoader.load(getClass().getResource("/XMLDocuments/vistaFirma.fxml"));
     private Parent vistaAdmin = FXMLLoader.load(getClass().getResource("/XMLDocuments/vistaAdmin.fxml"));
@@ -25,10 +25,10 @@ public class Logica {
     Logica(Stage primaryStage) throws IOException {
         this.stage = primaryStage;
         cargarVistaInicial();
-      
+
     }
-    
-    private void cargarVistaInicial( ) {
+
+    private void cargarVistaInicial() {
         scene = new Scene(vistaFirma);
         stage.setScene(scene);
         stage.show();

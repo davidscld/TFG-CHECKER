@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import de.jensd.fx.glyphs.icons525.Icons525View?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="667.0" prefWidth="869.0" style="-fx-background-color: #ad1457;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControladorVistasIniciales">
+    <children>
+        <Icons525View fill="#004d40" glyphName="CIRCLESELECT" layoutX="310.0" layoutY="301.0" size="250.0" />
+        <JFXTextField fx:id="etUsuario" alignment="CENTER" layoutX="303.0" layoutY="403.0" prefHeight="23.0" prefWidth="263.0">
+            <effect>
+                <Lighting>
+                    <bumpInput>
+                        <Shadow />
+                    </bumpInput>
+
+                </Lighting>
+            </effect>
+
+        </JFXTextField>
+        <JFXButton fx:id="btnFirmar" buttonType="RAISED" layoutX="321.0" layoutY="515.0" onAction="#comprobarFirma" prefHeight="46.0" prefWidth="228.0" ripplerFill="#7f0d0d" style="-fx-background-color: E65100; -fx-border-color: white;" text="Firma">
+            <effect>
+                <ColorAdjust />
+            </effect>
+            <font>
+                <Font name="System Bold Italic" size="18.0" />
+            </font>
+
+        </JFXButton>
+        <Label fx:id="lbResultadoComprobacion" layoutX="391.0" layoutY="334.0" prefHeight="16.0" prefWidth="86.0" />
+      <JFXButton fx:id="btnCargarVistaAdmin" layoutX="766.0" layoutY="14.0" onAction="#cargarVistaAdmin" prefHeight="26.0" prefWidth="102.0" text="Administrador">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></JFXButton>
+      <Icons525View glyphName="USER" layoutX="263.0" layoutY="428.0" size="30.0" wrappingWidth="24.79998779296875" />
+    </children>
+</AnchorPane>

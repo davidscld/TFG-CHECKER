@@ -6,9 +6,6 @@
 package Clases;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -16,9 +13,6 @@ import javafx.stage.Stage;
  * @author 6001231
  */
 public class Main extends Application {
-
-    public static Scene scene;
-
 
     /**
      * @param args the command line arguments
@@ -29,7 +23,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-       Logica l = new Logica (primaryStage);
+        Logica l = new Logica(primaryStage);
     }
 
 }
