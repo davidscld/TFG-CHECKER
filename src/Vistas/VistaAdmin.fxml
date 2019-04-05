@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="667.0" prefWidth="869.0" style="-fx-background-color: #ad1457;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.FXMLMainController">
+<AnchorPane id="AnchorPane" prefHeight="667.0" prefWidth="869.0" style="-fx-background-color: #ad1457;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControladorVistasIniciales">
     <children>
         <Icons525View fill="#004d40" glyphName="CIRCLESELECT" layoutX="310.0" layoutY="301.0" size="250.0" />
         <JFXTextField fx:id="etUsuario" alignment="CENTER" layoutX="303.0" layoutY="372.0" prefHeight="23.0" prefWidth="263.0">
