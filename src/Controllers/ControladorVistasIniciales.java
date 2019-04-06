@@ -5,6 +5,8 @@
  */
 package Controllers;
 
+import Clases.Constantes;
+import Clases.Logica;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -26,6 +28,9 @@ import javafx.stage.Stage;
  */
 public class ControladorVistasIniciales implements Initializable {
 
+    
+    
+    private Logica logica;
     @FXML
     private JFXTextField etUsuario;
 
@@ -38,11 +43,19 @@ public class ControladorVistasIniciales implements Initializable {
     @FXML
     private JFXButton btnCargarVistaAdmin;
 
+    
+    
+    public ControladorVistasIniciales(Logica aThis) throws IOException {
+        this.logica = aThis;
+        
+    }
+
     @FXML
     void cargarVistaAdmin(ActionEvent event) throws IOException {
 
+    }
 
-
+    public ControladorVistasIniciales() {
     }
 
     @FXML

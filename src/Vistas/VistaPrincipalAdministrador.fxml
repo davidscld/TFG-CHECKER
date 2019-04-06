@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="492.0" prefWidth="813.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.VistaPrincipalAdministradorController">
+   <children>
+      <HBox layoutX="125.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox alignment="CENTER_LEFT" prefHeight="492.0" prefWidth="80.0" spacing="40.0">
+               <children>
+                  <JFXButton prefHeight="30.0" prefWidth="80.0" text=" ">
+                     <graphic>
+                        <MaterialDesignIconView glyphName="ACCOUNT_BOX" size="30.0" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton prefHeight="30.0" prefWidth="80.0" text=" ">
+                     <graphic>
+                        <MaterialDesignIconView glyphName="ALARM_CHECK" size="30.0" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton prefHeight="30.0" prefWidth="80.0" text=" ">
+                     <graphic>
+                        <MaterialDesignIconView glyphName="FILE_PDF" size="30.0" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton prefHeight="30.0" prefWidth="81.0" text=" ">
+                     <graphic>
+                        <MaterialDesignIconView glyphName="EXIT_TO_APP" size="30.0" />
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="492.0" prefWidth="141.0" style="-fx-background-color: yellow;">
+               <children>
+                  <VBox alignment="CENTER_LEFT" layoutX="60.0" layoutY="146.0" prefHeight="200.0" prefWidth="149.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" layoutX="17.0" layoutY="-44.0" prefHeight="200.0" prefWidth="100.0" spacing="60.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <JFXButton prefHeight="25.0" prefWidth="150.0" text="Alta">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton prefHeight="25.0" prefWidth="136.0" text="Baja">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton prefHeight="25.0" prefWidth="134.0" text="Modificacion">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font></JFXButton>
+                        <JFXButton prefHeight="25.0" prefWidth="139.0" text="Listado">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font></JFXButton>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="492.0" prefWidth="573.0">
+               <children>
+                  <Pane layoutX="158.0" layoutY="146.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Pane layoutX="168.0" layoutY="156.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Pane layoutX="168.0" layoutY="156.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Pane layoutX="178.0" layoutY="166.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Pane layoutX="178.0" layoutY="166.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Pane layoutX="188.0" layoutY="176.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
