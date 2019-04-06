@@ -41,22 +41,13 @@ public class ControladorVistasIniciales implements Initializable {
     @FXML
     void cargarVistaAdmin(ActionEvent event) throws IOException {
 
-        Stage stage = new Stage();
-         Parent root = FXMLLoader.load(getClass().getResource("/XMLDocuments/vistaAdmin.fxml"));
-        Scene scene = new Scene(root);
 
-        stage.setScene(scene);
-        
-        stage.setTitle("Nueva Ventana");
-        stage.show();
 
     }
 
     @FXML
     void comprobarFirma(ActionEvent event) {
-        if (etUsuario.getText().equals("David")) {
-            lbResultadoComprobacion.setText("Correcto");
-        }
+
     }
 
     @Override

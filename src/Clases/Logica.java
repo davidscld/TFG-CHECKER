@@ -19,8 +19,8 @@ public class Logica {
 
     public Scene scene;
     private Stage stage;
-    private final Parent vistaFirma = FXMLLoader.load(getClass().getResource("/Vistas/VistaFirma.fxml"));
-    private final Parent vistaAdmin = FXMLLoader.load(getClass().getResource("/Vistas/VistaAdmin.fxml"));
+    private Parent vistaFirma = FXMLLoader.load(getClass().getResource("/Vistas/VistaFirma.fxml"));
+    private Parent vistaAdmin = FXMLLoader.load(getClass().getResource("/Vistas/VistaAdmin.fxml"));
 
     Logica(Stage primaryStage) throws IOException {
         this.stage = primaryStage;
