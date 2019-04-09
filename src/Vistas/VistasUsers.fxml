@@ -5,23 +5,17 @@
 <?import de.jensd.fx.glyphs.icons525.Icons525View?>
 <?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="490.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.VistasUsersController">
+<AnchorPane id="AnchorPane" prefHeight="490.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.VistasUsersController">
    <children>
-      <Pane layoutX="252.0" layoutY="117.0" prefHeight="228.0" prefWidth="256.0" style="-fx-background-color: #cddc39;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane fx:id="panelFirma" layoutX="252.0" layoutY="117.0" prefHeight="228.0" prefWidth="256.0" style="-fx-background-color: #cddc39;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="438.0" fitWidth="789.0" layoutX="13.0" layoutY="36.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="\Images\logoResidencia.png" />
-               </image>
-            </ImageView>
+
             <VBox layoutX="283.0" layoutY="19.0" prefHeight="441.0" prefWidth="250.0" spacing="70.0" style="-fx-background-color: #388e3c;">
                <children>
                   <MaterialDesignIconView glyphName="MARKER_CHECK" size="150.0" wrappingWidth="148.79998779296875">
@@ -36,13 +30,13 @@
                               <Insets bottom="10.0" left="10.0" />
                            </HBox.margin>
                         </MaterialDesignIconView>
-                        <JFXTextField alignment="CENTER" focusColor="WHITE" prefHeight="28.0" prefWidth="162.0" promptText="Codigo de empleado" unFocusColor="BLACK">
+                        <JFXTextField fx:id="etCodigoEmpleadoVistaFirma" alignment="CENTER" focusColor="WHITE" prefHeight="28.0" prefWidth="162.0" promptText="Codigo de empleado" unFocusColor="BLACK">
                            <padding>
                               <Insets top="10.0" />
                            </padding>
                         </JFXTextField>
                      </children></HBox>
-                  <JFXButton prefHeight="42.0" prefWidth="138.0" style="-fx-background-color: white;" text="Firmar">
+                  <JFXButton fx:id="btnFirmar" prefHeight="42.0" prefWidth="138.0" style="-fx-background-color: white;" text="Firmar">
                      <VBox.margin>
                         <Insets left="60.0" />
                      </VBox.margin>
@@ -54,20 +48,16 @@
                <opaqueInsets>
                   <Insets />
                </opaqueInsets></VBox>
-            <JFXButton layoutX="679.0" layoutY="14.0" prefHeight="25.0" prefWidth="123.0" style="-fx-background-color: #e6ee9c;" text="Administrador">
+            <JFXButton fx:id="btnCargarVistaAdmin" layoutX="679.0" layoutY="14.0" onAction="#cambiarVistaPrincipal" prefHeight="25.0" prefWidth="123.0" style="-fx-background-color: #e6ee9c;" text="Administrador">
                <graphic>
                   <Icons525View glyphName="KEY" size="15.0" />
                </graphic>
             </JFXButton>
          </children>
       </Pane>
-      <Pane layoutX="10.0" layoutY="10.0" prefHeight="228.0" prefWidth="256.0" style="-fx-background-color: #cddc39;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane fx:id="panelAdministrador" layoutX="10.0" layoutY="10.0" prefHeight="228.0" prefWidth="256.0" style="-fx-background-color: #cddc39;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="438.0" fitWidth="789.0" layoutX="13.0" layoutY="36.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="/Images/logoResidencia.png" />
-               </image>
-            </ImageView>
+          
             <VBox layoutX="283.0" layoutY="19.0" prefHeight="454.0" prefWidth="250.0" spacing="50.0" style="-fx-background-color: #ad1457;">
                <children>
                   <MaterialDesignIconView glyphName="MARKER_CHECK" size="150.0" wrappingWidth="148.79998779296875">
@@ -84,7 +74,7 @@
                                     <Insets bottom="10.0" left="10.0" />
                                  </HBox.margin>
                               </MaterialDesignIconView>
-                              <JFXTextField alignment="CENTER" focusColor="WHITE" prefHeight="28.0" prefWidth="162.0" promptText="Codigo de empleado" unFocusColor="BLACK">
+                              <JFXTextField fx:id="etCodigoAdmin" alignment="CENTER" focusColor="WHITE" prefHeight="28.0" prefWidth="162.0" promptText="Codigo de empleado" unFocusColor="BLACK">
                                  <padding>
                                     <Insets top="10.0" />
                                  </padding>
@@ -98,7 +88,7 @@
                                     <Insets bottom="10.0" left="10.0" />
                                  </HBox.margin>
                               </MaterialDesignIconView>
-                              <JFXTextField alignment="CENTER" focusColor="WHITE" prefHeight="28.0" prefWidth="162.0" promptText="Codigo de empleado" unFocusColor="BLACK">
+                              <JFXTextField fx:id="etPassAdmin" alignment="CENTER" focusColor="WHITE" prefHeight="28.0" prefWidth="162.0" promptText="Codigo de empleado" unFocusColor="BLACK">
                                  <padding>
                                     <Insets top="10.0" />
                                  </padding>
@@ -107,7 +97,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <JFXButton prefHeight="42.0" prefWidth="138.0" style="-fx-background-color: white;" text="Acceder">
+                  <JFXButton fx:id="btnAccederAdmin" prefHeight="42.0" prefWidth="138.0" style="-fx-background-color: white;" text="Acceder">
                      <VBox.margin>
                         <Insets left="60.0" />
                      </VBox.margin>
@@ -120,8 +110,10 @@
                   <Insets />
                </opaqueInsets>
             </VBox>
-            <JFXButton layoutX="726.0" layoutY="14.0" prefHeight="28.0" prefWidth="75.0" text=" " />
-            <Icons525View glyphName="CIRCLE_ARROW" layoutX="19.0" layoutY="51.0" size="30.0" />
+            <JFXButton fx:id="btnVolverVistaFirma" layoutX="14.0" layoutY="14.0" onAction="#cambiarVistaPrincipal" prefHeight="28.0" prefWidth="75.0" text=" ">
+               <graphic>
+                  <Icons525View glyphName="CIRCLE_ARROW" size="30.0" />
+               </graphic></JFXButton>
          </children>
       </Pane>
    </children>
