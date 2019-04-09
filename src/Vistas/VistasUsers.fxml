@@ -19,7 +19,7 @@
          <children>
             <ImageView fitHeight="438.0" fitWidth="789.0" layoutX="13.0" layoutY="36.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../Downloads/Logo%20resi%20Transparente.png" />
+                  <Image url="\Images\logoResidencia.png" />
                </image>
             </ImageView>
             <VBox layoutX="283.0" layoutY="19.0" prefHeight="441.0" prefWidth="250.0" spacing="70.0" style="-fx-background-color: #388e3c;">
@@ -65,7 +65,7 @@
          <children>
             <ImageView fitHeight="438.0" fitWidth="789.0" layoutX="13.0" layoutY="36.0" opacity="0.2" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../Downloads/Logo%20resi%20Transparente.png" />
+                  <Image url="/Images/logoResidencia.png" />
                </image>
             </ImageView>
             <VBox layoutX="283.0" layoutY="19.0" prefHeight="454.0" prefWidth="250.0" spacing="50.0" style="-fx-background-color: #ad1457;">
