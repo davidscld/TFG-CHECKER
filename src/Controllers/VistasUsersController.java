@@ -5,9 +5,16 @@
  */
 package Controllers;
 
+import Clases.Intercambiadora;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -15,13 +22,57 @@ import javafx.fxml.Initializable;
  * @author 6001231
  */
 public class VistasUsersController implements Initializable {
+    
+    private Intercambiadora intercambiadora = new Intercambiadora();
+    @FXML
+    private Pane panelFirma;
 
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    private JFXTextField etCodigoEmpleadoVistaFirma;
+
+    @FXML
+    private JFXButton btnFirmar;
+
+    @FXML
+    private JFXButton btnCargarVistaAdmin;
+
+    @FXML
+    private Pane panelAdministrador;
+
+    @FXML
+    private JFXTextField etCodigoAdmin;
+
+    @FXML
+    private JFXTextField etPassAdmin;
+
+    @FXML
+    private JFXButton btnAccederAdmin;
+
+    @FXML
+    private JFXButton btnVolverVistaFirma;
+
+    @FXML
+    void accederOpcionesAdministrador(ActionEvent event) throws IOException {
+        intercambiadora.cargarVistaAdministrador();
+    }
+
+    @FXML
+    void cargarVistaContraria(ActionEvent event) {
+        if (event.getSource() == btnCargarVistaAdmin) {
+            panelAdministrador.toFront();
+        } else {
+            panelFirma.toFront();
+        }
+    }
+
+    @FXML
+    void realizarFirmaUsuario(ActionEvent event) {
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }
