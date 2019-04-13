@@ -13,48 +13,6 @@
 
 <AnchorPane id="AnchorPane" prefHeight="490.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.VistasUsersController">
    <children>
-      <Pane fx:id="panelFirma" layoutX="252.0" layoutY="117.0" prefHeight="228.0" prefWidth="256.0" style="-fx-background-color: #cddc39;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-
-            <VBox layoutX="283.0" layoutY="19.0" prefHeight="441.0" prefWidth="250.0" spacing="70.0" style="-fx-background-color: #388e3c;">
-               <children>
-                  <MaterialDesignIconView glyphName="MARKER_CHECK" size="150.0" wrappingWidth="148.79998779296875">
-                     <VBox.margin>
-                        <Insets left="50.0" top="10.0" />
-                     </VBox.margin>
-                  </MaterialDesignIconView>
-                  <HBox prefHeight="64.0" prefWidth="249.0">
-                     <children>
-                        <MaterialDesignIconView glyphName="ACCOUNT_CHECK" size="50.0" wrappingWidth="65.5999755859375">
-                           <HBox.margin>
-                              <Insets bottom="10.0" left="10.0" />
-                           </HBox.margin>
-                        </MaterialDesignIconView>
-                        <JFXTextField fx:id="etCodigoEmpleadoVistaFirma" alignment="CENTER" focusColor="WHITE" prefHeight="28.0" prefWidth="162.0" promptText="Codigo de empleado" unFocusColor="BLACK">
-                           <padding>
-                              <Insets top="10.0" />
-                           </padding>
-                        </JFXTextField>
-                     </children></HBox>
-                  <JFXButton fx:id="btnFirmar" prefHeight="42.0" prefWidth="138.0" style="-fx-background-color: white;" text="Firmar">
-                     <VBox.margin>
-                        <Insets left="60.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="System Bold Italic" size="14.0" />
-                     </font>
-                  </JFXButton>
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets></VBox>
-            <JFXButton fx:id="btnCargarVistaAdmin" layoutX="679.0" layoutY="14.0" onAction="#cambiarVistaPrincipal" prefHeight="25.0" prefWidth="123.0" style="-fx-background-color: #e6ee9c;" text="Administrador">
-               <graphic>
-                  <Icons525View glyphName="KEY" size="15.0" />
-               </graphic>
-            </JFXButton>
-         </children>
-      </Pane>
       <Pane fx:id="panelAdministrador" layoutX="10.0" layoutY="10.0" prefHeight="228.0" prefWidth="256.0" style="-fx-background-color: #cddc39;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
           
@@ -97,7 +55,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <JFXButton fx:id="btnAccederAdmin" prefHeight="42.0" prefWidth="138.0" style="-fx-background-color: white;" text="Acceder">
+                  <JFXButton fx:id="btnAccederAdmin" onAction="#accederOpcionesAdministrador" prefHeight="42.0" prefWidth="138.0" style="-fx-background-color: white;" text="Acceder">
                      <VBox.margin>
                         <Insets left="60.0" />
                      </VBox.margin>
@@ -110,10 +68,52 @@
                   <Insets />
                </opaqueInsets>
             </VBox>
-            <JFXButton fx:id="btnVolverVistaFirma" layoutX="14.0" layoutY="14.0" onAction="#cambiarVistaPrincipal" prefHeight="28.0" prefWidth="75.0" text=" ">
+            <JFXButton fx:id="btnVolverVistaFirma" layoutX="14.0" layoutY="14.0" onAction="#cargarVistaContraria" prefHeight="28.0" prefWidth="75.0" text=" ">
                <graphic>
                   <Icons525View glyphName="CIRCLE_ARROW" size="30.0" />
                </graphic></JFXButton>
+         </children>
+      </Pane>
+      <Pane fx:id="panelFirma" layoutX="252.0" layoutY="117.0" prefHeight="228.0" prefWidth="256.0" style="-fx-background-color: #cddc39;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+
+            <VBox layoutX="283.0" layoutY="19.0" prefHeight="441.0" prefWidth="250.0" spacing="70.0" style="-fx-background-color: #388e3c;">
+               <children>
+                  <MaterialDesignIconView glyphName="MARKER_CHECK" size="150.0" wrappingWidth="148.79998779296875">
+                     <VBox.margin>
+                        <Insets left="50.0" top="10.0" />
+                     </VBox.margin>
+                  </MaterialDesignIconView>
+                  <HBox prefHeight="64.0" prefWidth="249.0">
+                     <children>
+                        <MaterialDesignIconView glyphName="ACCOUNT_CHECK" size="50.0" wrappingWidth="65.5999755859375">
+                           <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" />
+                           </HBox.margin>
+                        </MaterialDesignIconView>
+                        <JFXTextField fx:id="etCodigoEmpleadoVistaFirma" alignment="CENTER" focusColor="WHITE" prefHeight="28.0" prefWidth="162.0" promptText="Codigo de empleado" unFocusColor="BLACK">
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </JFXTextField>
+                     </children></HBox>
+                  <JFXButton fx:id="btnFirmar" onAction="#realizarFirmaUsuario" prefHeight="42.0" prefWidth="138.0" style="-fx-background-color: white;" text="Firmar">
+                     <VBox.margin>
+                        <Insets left="60.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold Italic" size="14.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets></VBox>
+            <JFXButton fx:id="btnCargarVistaAdmin" layoutX="679.0" layoutY="14.0" onAction="#cargarVistaContraria" prefHeight="25.0" prefWidth="123.0" style="-fx-background-color: #e6ee9c;" text="Administrador">
+               <graphic>
+                  <Icons525View glyphName="KEY" size="15.0" />
+               </graphic>
+            </JFXButton>
          </children>
       </Pane>
    </children>
