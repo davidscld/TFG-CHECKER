@@ -32,6 +32,7 @@ public class Main extends Application {
         ventana.setResizable(false);
         intercambiadora = new Intercambiadora();
         intercambiadora.cargarVistaAdministrador();
+       
         
     }
     

@@ -11,9 +11,13 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Time;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -22,8 +26,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * FXML Controller class
@@ -34,7 +38,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
 
     private Intercambiadora intercambiadora = new Intercambiadora();
     private GestorBD gestorBD = new GestorBD();
-
+    private FileInputStream imagenFirma;
     @FXML
     private JFXButton btnEmpleados;
 
@@ -141,9 +145,18 @@ public class VistaPrincipalAdministradorController implements Initializable {
     private JFXButton btnGuardarNuevoHorario;
 
     @FXML
-    void buscarImagenFirma(ActionEvent event) {
+    void buscarImagenFirma(ActionEvent event) throws FileNotFoundException {
+        int seleccion;
+        String rutaImagen;
+
         JFileChooser buscadorFirmas = new JFileChooser();
-        int seleccion = buscadorFirmas.showOpenDialog(null);
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("jpg", "png", "JPG", "PNG");
+        buscadorFirmas.setFileFilter(filtro);
+        seleccion = buscadorFirmas.showOpenDialog(buscadorFirmas);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            rutaImagen = buscadorFirmas.getSelectedFile().getAbsolutePath();
+            imagenFirma = new FileInputStream(rutaImagen);
+        }
 
     }
 
@@ -191,18 +204,20 @@ public class VistaPrincipalAdministradorController implements Initializable {
 
     @FXML
     void eliminarHorario(ActionEvent event) {
-        //gestorBD.eliminarHorarioTrabajador(Integer.parseInt(etCodigoEmpleadoEliminarHorario.toString()), dpFechaEliminarHorario.getValue());
-       Date date =  java.sql.Date.valueOf(dpFechaEliminarHorario.getValue());
+        gestorBD.eliminarHorarioTrabajador(Integer.parseInt(etCodigoEmpleadoEliminarHorario.toString()), java.sql.Date.valueOf(dpFechaEliminarHorario.getValue()));
+
     }
 
     @FXML
-    void guardarNuevoEmpleado(ActionEvent event) {
-
+    void guardarNuevoEmpleado(ActionEvent event) throws SQLException {
+        gestorBD.darAltaTrabajador(etNombreEmpleado.getText(), etApellidosEmpleado.getText(), imagenFirma);
     }
 
     @FXML
     void guardarNuevoHorario(ActionEvent event) {
-       
+        gestorBD.nuevoHorarioTrabajador(Integer.parseInt(etCodigoEmpleadoNuevoHorario.getText()),
+                java.sql.Time.valueOf(tpHoraInicio.getValue()), java.sql.Time.valueOf(tpHoraFin.getValue()),
+                java.sql.Date.valueOf(dpFechaNuevoHorario.getValue()));
     }
 
     @Override
