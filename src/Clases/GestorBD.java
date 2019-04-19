@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,9 +34,9 @@ public class GestorBD {
     private ResultSet resultadoSelect;
     private String sentenciaSQL;
     private final String NOMBRE_TABLA_TRBAJADORES = "trabajadores", NOMBRE_TABLA_HORARIOS = "horarios";
-    private final String RESULTADO_OK = "Operacion OK", RESULTADO_KO = "Operacion fallida";
+    private final boolean RESULTADO_OK = true, RESULTADO_KO = false;
     private int resultadoConsultaSQL;
-    private static ArrayList<Integer> listadoNumerosTrabajadores = listadoNumerosTrabajadores = new ArrayList<>();
+    private static ArrayList<Integer> listadoNumerosTrabajadores = null;
 
     public GestorBD() {
         try {
@@ -47,7 +46,7 @@ public class GestorBD {
         }
     }
 
-    public String eliminarHorarioTrabajador(int codigoTrabajador, Date fecha) {
+    public boolean eliminarHorarioTrabajador(int codigoTrabajador, Date fecha) {
         try {
             conexion = DriverManager.getConnection(url, usuario, contrasenia);
             st = conexion.createStatement();
@@ -71,33 +70,43 @@ public class GestorBD {
         }
     }
 
-    public String nuevoHorarioTrabajador(int codigoTrabajador, Time horaInicio, Time horaFin, Date fecha) {
-        try {
-            conexion = DriverManager.getConnection(url, usuario, contrasenia);
-            st = conexion.createStatement();
+    public boolean nuevoHorarioTrabajador(int codigoTrabajador, Time horaInicio, Time horaFin, Date fecha) {
+        if (comprobarSiExisteCodEmpleado(codigoTrabajador)) {
 
-            sentenciaSQL = "INSERT INTO " + NOMBRE_TABLA_HORARIOS + "(fecha, horaInicio, horaFin, numeroEmpleado) VALUES ('"
-                    + fecha + "', '" + horaInicio + "', '" + horaFin + "', '" + codigoTrabajador + "');";
+            try {
+                conexion = DriverManager.getConnection(url, usuario, contrasenia);
+                st = conexion.createStatement();
 
-            resultadoConsultaSQL = st.executeUpdate(sentenciaSQL);
+                sentenciaSQL = "INSERT INTO " + NOMBRE_TABLA_HORARIOS + "(fecha, horaInicio, horaFin, numeroEmpleado) VALUES ('"
+                        + fecha + "', '" + horaInicio + "', '" + horaFin + "', '" + codigoTrabajador + "');";
 
-            st.close();
-            conexion.close();
+                resultadoConsultaSQL = st.executeUpdate(sentenciaSQL);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+                st.close();
+                conexion.close();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (resultadoConsultaSQL == 1) {
+                return RESULTADO_OK;
+            } else {
+                return RESULTADO_KO;
+
+            }
+
         }
-
-        if (resultadoConsultaSQL == 1) {
-            return RESULTADO_OK;
-        } else {
-            return RESULTADO_KO;
-
-        }
+        return RESULTADO_KO;
     }
 
-    public String darAltaTrabajador(String nombre, String apellido, FileInputStream imagenFirma) throws SQLException {
-        int codigoEmpleado = nuevoCodigoEmpleado();
+    public boolean darAltaTrabajador(String nombre, String apellido, FileInputStream imagenFirma) throws SQLException {
+        int codigoEmpleado;
+        do {
+            codigoEmpleado = (int) (Math.random() * 1000);
+
+        } while (comprobarSiExisteCodEmpleado(codigoEmpleado));
+        listadoNumerosTrabajadores.add(codigoEmpleado);
         try {
             conexion = DriverManager.getConnection(url, usuario, contrasenia);
             st = conexion.createStatement();
@@ -122,7 +131,7 @@ public class GestorBD {
         }
     }
 
-    public String darBajaTrabajador(int codigoTrabajador) {
+    public boolean darBajaTrabajador(int codigoTrabajador) {
         try {
             conexion = DriverManager.getConnection(url, usuario, contrasenia);
             st = conexion.createStatement();
@@ -151,26 +160,6 @@ public class GestorBD {
         return null;
     }
 
-    private int nuevoCodigoEmpleado() throws SQLException {
-        int codigoEmpleado;
-        boolean numeroEncontrado;
-        if (listadoNumerosTrabajadores.isEmpty()) {
-            cargarArrayListNumerosTrabajadores();
-        }
-        do {
-            numeroEncontrado = false;
-            codigoEmpleado = (int) (Math.random() * 1000);
-            for (Integer it : listadoNumerosTrabajadores) {
-                if (it == codigoEmpleado) {
-                    numeroEncontrado = true;
-                }
-            }
-
-        } while (numeroEncontrado);
-
-        return codigoEmpleado;
-    }
-
     public void cargarArrayListNumerosTrabajadores() {
 
         try {
@@ -189,6 +178,50 @@ public class GestorBD {
         } catch (SQLException ex) {
             Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private boolean comprobarSiExisteCodEmpleado(int codigoComprobar) {
+        if (listadoDeTrabajadores() == null) {
+            listadoNumerosTrabajadores = new ArrayList<>();
+            cargarArrayListNumerosTrabajadores();
+        }
+
+        for (Integer it : listadoNumerosTrabajadores) {
+            if (it == codigoComprobar) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean realizarFirma(int codEmpFirma) {
+        if (comprobarSiExisteCodEmpleado(codEmpFirma)) {
+
+            try {
+                conexion = DriverManager.getConnection(url, usuario, contrasenia);
+                st = conexion.createStatement();
+
+                sentenciaSQL = "UPDATE " + NOMBRE_TABLA_HORARIOS + " SET realizado =  1 WHERE numeroEmpleado = " + codEmpFirma + ";";
+
+                resultadoConsultaSQL = st.executeUpdate(sentenciaSQL);
+
+                st.close();
+                conexion.close();
+
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (resultadoConsultaSQL == 1) {
+                return true;
+            } else {
+                return false;
+
+            }
+        } else {
+            return false;
+        }
+
     }
 
 }

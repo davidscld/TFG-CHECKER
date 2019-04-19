@@ -5,8 +5,10 @@
  */
 package Controllers;
 
+import Clases.GestorBD;
 import Clases.Intercambiadora;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
@@ -22,8 +24,10 @@ import javafx.scene.layout.Pane;
  * @author 6001231
  */
 public class VistasUsersController implements Initializable {
-    
+
+    private final String USER = "Residencia", PASS = "Ledesma";
     private Intercambiadora intercambiadora = new Intercambiadora();
+    private GestorBD gestorBD = new GestorBD();
     @FXML
     private Pane panelFirma;
 
@@ -43,7 +47,7 @@ public class VistasUsersController implements Initializable {
     private JFXTextField etCodigoAdmin;
 
     @FXML
-    private JFXTextField etPassAdmin;
+    private JFXPasswordField etPassAdmin;
 
     @FXML
     private JFXButton btnAccederAdmin;
@@ -53,7 +57,10 @@ public class VistasUsersController implements Initializable {
 
     @FXML
     void accederOpcionesAdministrador(ActionEvent event) throws IOException {
-        intercambiadora.cargarVistaAdministrador();
+        if (etCodigoAdmin.getText().equals(USER) && etPassAdmin.getText().equals(PASS)) {
+            limpiarCampos();
+            intercambiadora.cargarVistaAdministrador();
+        }
     }
 
     @FXML
@@ -67,12 +74,23 @@ public class VistasUsersController implements Initializable {
 
     @FXML
     void realizarFirmaUsuario(ActionEvent event) {
+        int codigoEmpFirma = Integer.parseInt(etCodigoEmpleadoVistaFirma.getText());
+
+        if (gestorBD.realizarFirma(codigoEmpFirma)) {
+            limpiarCampos();
+        }
 
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    }
+
+    private void limpiarCampos() {
+        etPassAdmin.setText("");
+        etCodigoEmpleadoVistaFirma.setText("");
+        etCodigoAdmin.setText("");
     }
 
 }

@@ -11,19 +11,18 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
-import java.io.File;
+import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.Timer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javax.swing.JFileChooser;
@@ -148,7 +147,6 @@ public class VistaPrincipalAdministradorController implements Initializable {
     void buscarImagenFirma(ActionEvent event) throws FileNotFoundException {
         int seleccion;
         String rutaImagen;
-
         JFileChooser buscadorFirmas = new JFileChooser();
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("jpg", "png", "JPG", "PNG");
         buscadorFirmas.setFileFilter(filtro);
@@ -175,6 +173,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
 
     @FXML
     void cargarVistasHorarios(ActionEvent event) {
+        limpiarCampos();
         if (event.getSource() == btnAniadirHorario) {
             vistaNuevoHorario.toFront();
 
@@ -187,6 +186,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
 
     @FXML
     void cargarVistasPersonal(ActionEvent event) {
+        limpiarCampos();
         if (event.getSource() == btnAltaPersonal) {
             vistaNuevoEmpleado.toFront();
 
@@ -199,22 +199,33 @@ public class VistaPrincipalAdministradorController implements Initializable {
 
     @FXML
     void eliminarEmpleado(ActionEvent event) {
-        gestorBD.darBajaTrabajador(Integer.parseInt(etCodigoEmpleadoEliminar.getText()));
+
+        if (gestorBD.darBajaTrabajador(Integer.parseInt(etCodigoEmpleadoEliminar.getText()))) {//Si se ha eliminado bien el empleado
+            limpiarCampos();
+        } else {
+            notificarOperacionErronea(btnBajaPersonal);
+        }
     }
 
     @FXML
     void eliminarHorario(ActionEvent event) {
-        gestorBD.eliminarHorarioTrabajador(Integer.parseInt(etCodigoEmpleadoEliminarHorario.toString()), java.sql.Date.valueOf(dpFechaEliminarHorario.getValue()));
+        if (gestorBD.eliminarHorarioTrabajador(Integer.parseInt(etCodigoEmpleadoEliminarHorario.toString()), java.sql.Date.valueOf(dpFechaEliminarHorario.getValue()))) {
+            limpiarCampos();
+        } else {
+            notificarOperacionErronea(btnEliminarHorario);
+        }
 
     }
 
     @FXML
     void guardarNuevoEmpleado(ActionEvent event) throws SQLException {
+        limpiarCampos();
         gestorBD.darAltaTrabajador(etNombreEmpleado.getText(), etApellidosEmpleado.getText(), imagenFirma);
     }
 
     @FXML
     void guardarNuevoHorario(ActionEvent event) {
+        limpiarCampos();
         gestorBD.nuevoHorarioTrabajador(Integer.parseInt(etCodigoEmpleadoNuevoHorario.getText()),
                 java.sql.Time.valueOf(tpHoraInicio.getValue()), java.sql.Time.valueOf(tpHoraFin.getValue()),
                 java.sql.Date.valueOf(dpFechaNuevoHorario.getValue()));
@@ -223,6 +234,28 @@ public class VistaPrincipalAdministradorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    }
+
+    public void generarPDF() {
+
+    }
+
+    private void limpiarCampos() {
+        etApellidosEmpleado.setText("");
+        etCodigoEmpleadoEliminar.setText("");
+        etCodigoEmpleadoEliminarHorario.setText("");
+        etCodigoEmpleadoNuevoHorario.setText("");
+        etCodigoEmpleadoVerHorarios.setText("");
+        etNombreEmpleado.setText("");
+        tpHoraFin.getEditor().clear();
+        tpHoraInicio.getEditor().clear();
+        dpFechaEliminarHorario.getEditor().clear();
+        dpFechaNuevoHorario.getEditor().clear();
+    }
+
+    private void notificarOperacionErronea(JFXButton botonColorear) {
+    
+    
     }
 
 }
