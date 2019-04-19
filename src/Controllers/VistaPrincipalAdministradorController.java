@@ -7,8 +7,10 @@ package Controllers;
 
 import Clases.GestorBD;
 import Clases.Intercambiadora;
+import Clases.Trabajador;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXScrollPane;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import java.awt.Color;
@@ -17,12 +19,17 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javax.swing.JFileChooser;
@@ -38,6 +45,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
     private Intercambiadora intercambiadora = new Intercambiadora();
     private GestorBD gestorBD = new GestorBD();
     private FileInputStream imagenFirma;
+    ArrayList<Trabajador> datosTrabajadores = new ArrayList<>();
     @FXML
     private JFXButton btnEmpleados;
 
@@ -78,7 +86,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
     private Pane panelVacioPDF;
 
     @FXML
-    private Pane vistaListadoEmpleados;
+    private JFXScrollPane vistaListadoEmpleados;
 
     @FXML
     private Pane vistaHorariosPorEmpleado;
@@ -144,6 +152,9 @@ public class VistaPrincipalAdministradorController implements Initializable {
     private JFXButton btnGuardarNuevoHorario;
 
     @FXML
+    private GridPane cuadriculaListadoPersonal;
+
+    @FXML
     void buscarImagenFirma(ActionEvent event) throws FileNotFoundException {
         int seleccion;
         String rutaImagen;
@@ -193,6 +204,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
         } else if (event.getSource() == btnBajaPersonal) {
             vistaBajaEmpleado.toFront();
         } else if (event.getSource() == btnListarPersonal) {
+            rellenarVistaListado();
             vistaListadoEmpleados.toFront();
         }
     }
@@ -202,42 +214,45 @@ public class VistaPrincipalAdministradorController implements Initializable {
 
         if (gestorBD.darBajaTrabajador(Integer.parseInt(etCodigoEmpleadoEliminar.getText()))) {//Si se ha eliminado bien el empleado
             limpiarCampos();
-        } else {
-            notificarOperacionErronea(btnBajaPersonal);
         }
     }
 
     @FXML
     void eliminarHorario(ActionEvent event) {
-        if (gestorBD.eliminarHorarioTrabajador(Integer.parseInt(etCodigoEmpleadoEliminarHorario.toString()), java.sql.Date.valueOf(dpFechaEliminarHorario.getValue()))) {
+
+        if (gestorBD.eliminarHorarioTrabajador(Integer.parseInt(etCodigoEmpleadoEliminarHorario.getText()), java.sql.Date.valueOf(dpFechaEliminarHorario.getValue()))) {
             limpiarCampos();
-        } else {
-            notificarOperacionErronea(btnEliminarHorario);
         }
 
     }
 
     @FXML
     void guardarNuevoEmpleado(ActionEvent event) throws SQLException {
-        limpiarCampos();
-        gestorBD.darAltaTrabajador(etNombreEmpleado.getText(), etApellidosEmpleado.getText(), imagenFirma);
+
+        if (gestorBD.darAltaTrabajador(etNombreEmpleado.getText(), etApellidosEmpleado.getText(), imagenFirma)) {
+            limpiarCampos();
+        }
     }
 
     @FXML
     void guardarNuevoHorario(ActionEvent event) {
-        limpiarCampos();
-        gestorBD.nuevoHorarioTrabajador(Integer.parseInt(etCodigoEmpleadoNuevoHorario.getText()),
+
+        if (gestorBD.nuevoHorarioTrabajador(Integer.parseInt(etCodigoEmpleadoNuevoHorario.getText()),
                 java.sql.Time.valueOf(tpHoraInicio.getValue()), java.sql.Time.valueOf(tpHoraFin.getValue()),
-                java.sql.Date.valueOf(dpFechaNuevoHorario.getValue()));
+                java.sql.Date.valueOf(dpFechaNuevoHorario.getValue()))) {
+            limpiarCampos();
+        }
+
+    }
+
+    @FXML
+    void generarPDF(ActionEvent event) throws SQLException, FileNotFoundException {
+        gestorBD.crearPDFs();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }
-
-    public void generarPDF() {
-
     }
 
     private void limpiarCampos() {
@@ -253,9 +268,22 @@ public class VistaPrincipalAdministradorController implements Initializable {
         dpFechaNuevoHorario.getEditor().clear();
     }
 
-    private void notificarOperacionErronea(JFXButton botonColorear) {
-    
-    
+    private void rellenarVistaListado() {
+        cuadriculaListadoPersonal.getChildren().removeAll();
+        if (!datosTrabajadores.isEmpty()) {
+            datosTrabajadores.clear();
+        }
+        
+        datosTrabajadores = gestorBD.rellenarListadoTrabajadores();
+        System.out.println("Tamaño del array "+datosTrabajadores.size());
+        for (int i = 0; i < datosTrabajadores.size(); i++) {
+
+            Label nombre = new Label(datosTrabajadores.get(i).getApellidos() + " " + datosTrabajadores.get(i).getNombre());
+            cuadriculaListadoPersonal.add(nombre, 0, (i + 1));
+            Label codigo = new Label("" + datosTrabajadores.get(i).getNumeroEmpleado());
+            cuadriculaListadoPersonal.add(codigo, 1, (i + 1));
+        }
+
     }
 
 }
