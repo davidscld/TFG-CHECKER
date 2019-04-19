@@ -6,6 +6,8 @@
 package Clases;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -14,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,7 +39,7 @@ public class GestorBD {
     private final String NOMBRE_TABLA_TRBAJADORES = "trabajadores", NOMBRE_TABLA_HORARIOS = "horarios";
     private final boolean RESULTADO_OK = true, RESULTADO_KO = false;
     private int resultadoConsultaSQL;
-    private static ArrayList<Integer> listadoNumerosTrabajadores = null;
+    public static ArrayList<Integer> listadoNumerosTrabajadores = null;
 
     public GestorBD() {
         try {
@@ -47,11 +50,12 @@ public class GestorBD {
     }
 
     public boolean eliminarHorarioTrabajador(int codigoTrabajador, Date fecha) {
+
         try {
             conexion = DriverManager.getConnection(url, usuario, contrasenia);
             st = conexion.createStatement();
 
-            sentenciaSQL = "DELETE FROM " + NOMBRE_TABLA_HORARIOS + " WHERE numeroEmpleado = " + codigoTrabajador + " AND fecha = '" + fecha + "';";
+            sentenciaSQL = "DELETE FROM " + NOMBRE_TABLA_HORARIOS + " WHERE numeroEmpleado = " + codigoTrabajador + " AND fecha = " + fecha + ";";
 
             resultadoConsultaSQL = st.executeUpdate(sentenciaSQL);
 
@@ -68,6 +72,7 @@ public class GestorBD {
             return RESULTADO_KO;
 
         }
+
     }
 
     public boolean nuevoHorarioTrabajador(int codigoTrabajador, Time horaInicio, Time horaFin, Date fecha) {
@@ -155,12 +160,7 @@ public class GestorBD {
         }
     }
 
-    public ArrayList<Trabajador> listadoDeTrabajadores() {
-
-        return null;
-    }
-
-    public void cargarArrayListNumerosTrabajadores() {
+    private void cargarArrayListNumerosTrabajadores() {
 
         try {
             conexion = DriverManager.getConnection(url, usuario, contrasenia);  //SIEMPRE IGUAL
@@ -180,8 +180,8 @@ public class GestorBD {
         }
     }
 
-    private boolean comprobarSiExisteCodEmpleado(int codigoComprobar) {
-        if (listadoDeTrabajadores() == null) {
+    public boolean comprobarSiExisteCodEmpleado(int codigoComprobar) {
+        if (listadoNumerosTrabajadores == null) {
             listadoNumerosTrabajadores = new ArrayList<>();
             cargarArrayListNumerosTrabajadores();
         }
@@ -201,7 +201,7 @@ public class GestorBD {
                 conexion = DriverManager.getConnection(url, usuario, contrasenia);
                 st = conexion.createStatement();
 
-                sentenciaSQL = "UPDATE " + NOMBRE_TABLA_HORARIOS + " SET realizado =  1 WHERE numeroEmpleado = " + codEmpFirma + ";";
+                sentenciaSQL = "UPDATE " + NOMBRE_TABLA_HORARIOS + " SET realizado =  1 WHERE numeroEmpleado = " + codEmpFirma + " AND fecha = DATE(NOW());";
 
                 resultadoConsultaSQL = st.executeUpdate(sentenciaSQL);
 
@@ -224,4 +224,39 @@ public class GestorBD {
 
     }
 
+    public void crearPDFs() throws FileNotFoundException {
+        comprobarSiExisteCodEmpleado(0);
+        Collections.sort(listadoNumerosTrabajadores);
+
+        for (int i = 0; i < listadoNumerosTrabajadores.size(); i++) {
+            //      Document pdf = new Document();
+            //FileOutputStream ficheroPdf = new FileOutputStream("C:/Users/dvdsa/Desktop/PDFGenerados/firmas"+listadoNumerosTrabajadores.get(i)+".pdf");
+            //  PdfWriter.getInstance(pdf,ficheroPdf).setInitialLeading(20);
+            //pdf.open();
+
+        }
+    }
+    
+    public ArrayList<Trabajador> rellenarListadoTrabajadores(){
+        ArrayList <Trabajador> arrayListDatosTrabajadores = new ArrayList<>();
+        try {
+            conexion = DriverManager.getConnection(url, usuario, contrasenia);  //SIEMPRE IGUAL
+            st = conexion.createStatement();    //SIEMPRE IGUAL
+
+            //Cambiamos la sentenncia que vamos a ejecutar, este caso sera un UPDATE            
+            sentenciaSQL = "SELECT nombre, apellidos, numeroEmpleado FROM " +NOMBRE_TABLA_TRBAJADORES+ ";";
+            resultadoSelect = st.executeQuery(sentenciaSQL);
+            while (resultadoSelect.next()) {
+                Trabajador t = new Trabajador(resultadoSelect.getString(1), resultadoSelect.getString(2), Integer.parseInt(resultadoSelect.getString(3)));
+               arrayListDatosTrabajadores.add(t);
+
+            }//while "hay mas datos"            
+            st.close(); //cerramos
+            conexion.close();   //cerramos
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return arrayListDatosTrabajadores;
+    }
 }
