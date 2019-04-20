@@ -15,6 +15,7 @@ import com.jfoenix.controls.JFXScrollPane;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import java.awt.Color;
+import java.awt.Font;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,6 +30,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -89,7 +91,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
     private Pane panelVacioPDF;
 
     @FXML
-    private JFXScrollPane vistaListadoEmpleados;
+    private ScrollPane vistaListadoEmpleados;
 
     @FXML
     private Pane vistaHorariosPorEmpleado;
@@ -162,7 +164,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
 
     @FXML
     private Label lbCodEmpVerHorarios;
-    
+
     @FXML
     void buscarImagenFirma(ActionEvent event) throws FileNotFoundException {
         int seleccion;
@@ -275,6 +277,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
         tpHoraInicio.getEditor().clear();
         dpFechaEliminarHorario.getEditor().clear();
         dpFechaNuevoHorario.getEditor().clear();
+
     }
 
     @FXML
@@ -282,20 +285,26 @@ public class VistaPrincipalAdministradorController implements Initializable {
         int codigoUsuarioBuscarHorarios = Integer.parseInt(etCodigoEmpleadoVerHorarios.getText());
 
         gvListadoHorariosEmpleado.getChildren().removeAll(gvListadoHorariosEmpleado.getChildren());
-        Label etiquetaFecha = new Label("FECHA");
-        Label etiquetaHorarios = new Label("HORARIOS");
-        gvListadoHorariosEmpleado.add(etiquetaFecha, 0, 0);
-        gvListadoHorariosEmpleado.add(etiquetaHorarios, 1, 0);
 
+        datosHorariosPorTrabajador.clear();
         datosHorariosPorTrabajador = gestorBD.rellenarListadoHorariosTrabajador(codigoUsuarioBuscarHorarios);
+        if (!datosHorariosPorTrabajador.isEmpty()) {
+            Label etiquetaFecha = new Label("FECHA");
+            Label etiquetaHorarios = new Label("HORARIOS");
+            gvListadoHorariosEmpleado.add(etiquetaFecha, 0, 0);
+            gvListadoHorariosEmpleado.add(etiquetaHorarios, 1, 0);
+            for (int i = 0; i < datosHorariosPorTrabajador.size(); i++) {
 
-        for (int i = 0; i < datosHorariosPorTrabajador.size(); i++) {
+                Label nombre = new Label(datosHorariosPorTrabajador.get(i).getFecha());
+                gvListadoHorariosEmpleado.add(nombre, 0, (i + 1));
 
-            Label nombre = new Label(datosHorariosPorTrabajador.get(i).getFecha());
-            gvListadoHorariosEmpleado.add(nombre, 0, (i + 1));
-
-            Label codigo = new Label(datosHorariosPorTrabajador.get(i).getHoraInicio() + " -- " + datosHorariosPorTrabajador.get(i).getHoraFin());
-            gvListadoHorariosEmpleado.add(codigo, 1, (i + 1));
+                Label codigo = new Label(datosHorariosPorTrabajador.get(i).getHoraInicio() + " -- " + datosHorariosPorTrabajador.get(i).getHoraFin());
+                gvListadoHorariosEmpleado.add(codigo, 1, (i + 1));
+            }
+            lbCodEmpVerHorarios.setText("" + codigoUsuarioBuscarHorarios);
+            limpiarCampos();
+        } else {
+            lbCodEmpVerHorarios.setText("");
         }
 
     }
@@ -303,16 +312,18 @@ public class VistaPrincipalAdministradorController implements Initializable {
     private void rellenarVistaListado() {
 
         cuadriculaListadoPersonal.getChildren().removeAll(cuadriculaListadoPersonal.getChildren());
-        Label etiquetaNombre = new Label("NOMBRE");
+        Label etiquetaNombre = new Label("APELLIDOS NOMBRE");
+        etiquetaNombre.setStyle("-fx-font-weight: bold");
         Label etiquetaCodigo = new Label("CODIGO");
+        etiquetaCodigo.setStyle("-fx-font-weight: bold");
         cuadriculaListadoPersonal.add(etiquetaNombre, 0, 0);
         cuadriculaListadoPersonal.add(etiquetaCodigo, 1, 0);
 
         datosTrabajadores = gestorBD.rellenarListadoTrabajadores();
-
+        Collections.sort(datosTrabajadores);
         for (int i = 0; i < datosTrabajadores.size(); i++) {
 
-            Label nombre = new Label(datosTrabajadores.get(i).getApellidos() + " " + datosTrabajadores.get(i).getNombre());
+            Label nombre = new Label(datosTrabajadores.get(i).getApellidos() + " - " + datosTrabajadores.get(i).getNombre());
             cuadriculaListadoPersonal.add(nombre, 0, (i + 1));
 
             Label codigo = new Label("" + datosTrabajadores.get(i).getNumeroEmpleado());

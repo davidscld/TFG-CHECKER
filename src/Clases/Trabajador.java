@@ -33,7 +33,7 @@ public class Trabajador implements Comparable <Trabajador>{
 
     @Override
     public int compareTo(Trabajador t) {
-        return apellidos.compareTo(t.apellidos);
+        return apellidos.toLowerCase().compareTo(t.apellidos.toLowerCase());
     }
     
     

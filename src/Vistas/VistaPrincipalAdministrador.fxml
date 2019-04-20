@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXScrollPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import de.jensd.fx.glyphs.icons525.Icons525View?>
@@ -10,6 +9,7 @@
 <?import de.jensd.fx.glyphs.octicons.OctIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -120,30 +120,6 @@
             </AnchorPane>
             <AnchorPane prefHeight="492.0" prefWidth="598.0" style="-fx-background-color: #5D4037;">
                <children>
-                  <Pane fx:id="vistaBajaEmpleado" layoutX="178.0" layoutY="166.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00838F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <GridPane hgap="10.0" layoutX="79.0" layoutY="185.0" prefHeight="131.0" prefWidth="447.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="221.0" text="Codigo de empleado" textFill="WHITE">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <JFXTextField fx:id="etCodigoEmpleadoEliminar" focusColor="WHITE" unFocusColor="#443b3b" GridPane.columnIndex="1" />
-                           </children>
-                        </GridPane>
-                        <JFXButton fx:id="btnBajaEmpleado" layoutX="217.0" layoutY="329.0" onAction="#eliminarEmpleado" prefHeight="56.0" prefWidth="164.0" style="-fx-background-color: White;" text="Dar de baja" />
-                     </children>
-                  </Pane>
                   <Pane fx:id="vistaNuevoHorario" layoutX="168.0" layoutY="156.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00838F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <GridPane layoutX="14.0" layoutY="45.0" prefHeight="277.0" prefWidth="525.0">
@@ -186,85 +162,6 @@
                         </GridPane>
                         <JFXButton fx:id="btnGuardarNuevoHorario" layoutX="238.0" layoutY="370.0" onAction="#guardarNuevoHorario" prefHeight="43.0" prefWidth="120.0" style="-fx-background-color: white;" text="Guardar" />
                      </children></Pane>
-                  <JFXScrollPane fx:id="vistaListadoEmpleados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00838F;">
-                           <children>
-                              <GridPane fx:id="cuadriculaListadoPersonal" alignment="CENTER" hgap="10.0" layoutX="74.0" layoutY="30.0" prefHeight="90.0" prefWidth="447.0" vgap="40.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                              </GridPane>
-                           </children>
-                        </Pane>
-                     </children>
-                  </JFXScrollPane>
-                  <Pane fx:id="vistaNuevoEmpleado" layoutX="188.0" layoutY="176.0" prefHeight="492.0" prefWidth="667.0" style="-fx-background-color: #00838F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <JFXButton fx:id="btnGuardarNuevoEmpleado" alignment="CENTER" layoutX="181.0" layoutY="381.0" onAction="#guardarNuevoEmpleado" prefHeight="50.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Guardar">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </JFXButton>
-                        <GridPane alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="277.0" prefWidth="555.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.7778625488281" minWidth="10.0" prefWidth="178.22225952148438" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.7777404785156" minWidth="10.0" prefWidth="421.7777404785156" />
-                          </columnConstraints>
-                          <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="208.0" text="Nombre" textFill="WHITE">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="239.0" text="Apellidos" textFill="WHITE" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="197.0" text="Firma" textFill="WHITE" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <JFXTextField fx:id="etNombreEmpleado" alignment="CENTER" focusColor="#cc0a54" style="-jfx-focus-color: white; -jfx-unfocus-color: #FFF8E1;" GridPane.columnIndex="1">
-                                 <GridPane.margin>
-                                    <Insets left="30.0" right="30.0" />
-                                 </GridPane.margin>
-                              </JFXTextField>
-                              <JFXTextField fx:id="etApellidosEmpleado" alignment="CENTER" focusColor="#cc0a54" style="-jfx-focus-color: white; -jfx-unfocus-color: #FFF8E1;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets left="30.0" right="30.0" />
-                                 </GridPane.margin>
-                              </JFXTextField>
-                              <JFXButton fx:id="btnBuscarImagenFirma" alignment="CENTER" onAction="#buscarImagenFirma" prefHeight="37.0" prefWidth="169.0" ripplerFill="#ff1e87" style="-fx-background-color: white; -fx-border-radius: 1; -fx-border-color: black;" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <GridPane.margin>
-                                    <Insets left="100.0" />
-                                 </GridPane.margin>
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <graphic>
-                                    <OctIconView glyphName="DIFF" size="20.0" wrappingWidth="48.222198486328125" />
-                                 </graphic>
-                              </JFXButton>
-                           </children>
-                        </GridPane>
-                     </children>
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding></Pane>
                   <Pane fx:id="vistaEliminarHorario" layoutX="178.0" layoutY="166.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00838F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <GridPane alignment="CENTER" layoutX="21.0" layoutY="50.0" prefHeight="277.0" prefWidth="555.0">
@@ -342,6 +239,108 @@
                            </font>
                         </Label>
                      </children></Pane>
+                  <Pane fx:id="vistaBajaEmpleado" layoutX="178.0" layoutY="166.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00838F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <GridPane hgap="10.0" layoutX="79.0" layoutY="185.0" prefHeight="131.0" prefWidth="447.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="221.0" text="Codigo de empleado" textFill="WHITE">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="etCodigoEmpleadoEliminar" focusColor="WHITE" unFocusColor="#443b3b" GridPane.columnIndex="1" />
+                           </children>
+                        </GridPane>
+                        <JFXButton fx:id="btnBajaEmpleado" layoutX="217.0" layoutY="329.0" onAction="#eliminarEmpleado" prefHeight="56.0" prefWidth="164.0" style="-fx-background-color: White;" text="Dar de baja" />
+                     </children>
+                  </Pane>
+                  <ScrollPane fx:id="vistaListadoEmpleados" prefHeight="492.0" prefWidth="595.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <GridPane fx:id="cuadriculaListadoPersonal" alignment="CENTER" hgap="10.0" prefHeight="152.0" prefWidth="462.0" vgap="25.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                     </content>
+                     <padding>
+                        <Insets left="80.0" top="20.0" />
+                     </padding>
+                  </ScrollPane>
+                  <Pane fx:id="vistaNuevoEmpleado" layoutX="188.0" layoutY="176.0" prefHeight="492.0" prefWidth="667.0" style="-fx-background-color: #00838F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <JFXButton fx:id="btnGuardarNuevoEmpleado" alignment="CENTER" layoutX="181.0" layoutY="381.0" onAction="#guardarNuevoEmpleado" prefHeight="50.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Guardar">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </JFXButton>
+                        <GridPane alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="277.0" prefWidth="555.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.7778625488281" minWidth="10.0" prefWidth="178.22225952148438" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="421.7777404785156" minWidth="10.0" prefWidth="421.7777404785156" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="208.0" text="Nombre" textFill="WHITE">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="239.0" text="Apellidos" textFill="WHITE" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="197.0" text="Firma" textFill="WHITE" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="etNombreEmpleado" alignment="CENTER" focusColor="#cc0a54" style="-jfx-focus-color: white; -jfx-unfocus-color: #FFF8E1;" GridPane.columnIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="30.0" right="30.0" />
+                                 </GridPane.margin>
+                              </JFXTextField>
+                              <JFXTextField fx:id="etApellidosEmpleado" alignment="CENTER" focusColor="#cc0a54" style="-jfx-focus-color: white; -jfx-unfocus-color: #FFF8E1;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="30.0" right="30.0" />
+                                 </GridPane.margin>
+                              </JFXTextField>
+                              <JFXButton fx:id="btnBuscarImagenFirma" alignment="CENTER" onAction="#buscarImagenFirma" prefHeight="37.0" prefWidth="169.0" ripplerFill="#ff1e87" style="-fx-background-color: white; -fx-border-radius: 1; -fx-border-color: black;" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="100.0" />
+                                 </GridPane.margin>
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <graphic>
+                                    <OctIconView glyphName="DIFF" size="20.0" wrappingWidth="48.222198486328125" />
+                                 </graphic>
+                              </JFXButton>
+                           </children>
+                        </GridPane>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding></Pane>
                </children>
             </AnchorPane>
          </children>

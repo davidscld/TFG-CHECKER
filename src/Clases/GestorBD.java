@@ -5,6 +5,7 @@
  */
 package Clases;
 
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
 
 /**
  *
@@ -229,9 +232,9 @@ public class GestorBD {
         Collections.sort(listadoNumerosTrabajadores);
 
         for (int i = 0; i < listadoNumerosTrabajadores.size(); i++) {
-            //      Document pdf = new Document();
-            //FileOutputStream ficheroPdf = new FileOutputStream("C:/Users/dvdsa/Desktop/PDFGenerados/firmas"+listadoNumerosTrabajadores.get(i)+".pdf");
-            //  PdfWriter.getInstance(pdf,ficheroPdf).setInitialLeading(20);
+           //      Document pdf = new Document();
+            FileOutputStream ficheroPdf = new FileOutputStream("C:/Users/dvdsa/Desktop/PDFGenerados/firmas"+listadoNumerosTrabajadores.get(i)+".pdf");
+             // PdfWriter.getInstance(pdf,ficheroPdf).setInitialLeading(20);
             //pdf.open();
 
         }
@@ -258,7 +261,7 @@ public class GestorBD {
             Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        Collections.sort(arrayListDatosTrabajadores);
+       
 
         return arrayListDatosTrabajadores;
     }
