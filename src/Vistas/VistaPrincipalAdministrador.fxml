@@ -120,31 +120,6 @@
             </AnchorPane>
             <AnchorPane prefHeight="492.0" prefWidth="598.0" style="-fx-background-color: #5D4037;">
                <children>
-                  <Pane fx:id="vistaHorariosPorEmpleado" layoutX="168.0" layoutY="156.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00838F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <GridPane hgap="40.0" layoutX="30.0" layoutY="28.0" prefHeight="39.0" prefWidth="537.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.39996337890625" minWidth="10.0" prefWidth="145.39996337890625" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.5999633789062" minWidth="10.0" prefWidth="205.5999633789062" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.20001220703125" minWidth="10.0" prefWidth="104.40003662109376" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="180.0" text="Codigo de empleado">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <JFXTextField fx:id="etCodigoEmpleadoVerHorarios" focusColor="WHITE" prefHeight="26.0" prefWidth="149.0" unFocusColor="#c7b7b7" GridPane.columnIndex="1" />
-                              <JFXButton fx:id="btnVerHorarios" prefHeight="34.0" prefWidth="101.0" style="-fx-background-color: white;" text="Mostrar" GridPane.columnIndex="2" />
-                           </children>
-                           <padding>
-                              <Insets left="20.0" />
-                           </padding>
-                        </GridPane>
-                     </children></Pane>
                   <Pane fx:id="vistaBajaEmpleado" layoutX="178.0" layoutY="166.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00838F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <GridPane hgap="10.0" layoutX="79.0" layoutY="185.0" prefHeight="131.0" prefWidth="447.0">
@@ -211,6 +186,25 @@
                         </GridPane>
                         <JFXButton fx:id="btnGuardarNuevoHorario" layoutX="238.0" layoutY="370.0" onAction="#guardarNuevoHorario" prefHeight="43.0" prefWidth="120.0" style="-fx-background-color: white;" text="Guardar" />
                      </children></Pane>
+                  <JFXScrollPane fx:id="vistaListadoEmpleados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00838F;">
+                           <children>
+                              <GridPane fx:id="cuadriculaListadoPersonal" alignment="CENTER" hgap="10.0" layoutX="74.0" layoutY="30.0" prefHeight="90.0" prefWidth="447.0" vgap="40.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                              </GridPane>
+                           </children>
+                        </Pane>
+                     </children>
+                  </JFXScrollPane>
                   <Pane fx:id="vistaNuevoEmpleado" layoutX="188.0" layoutY="176.0" prefHeight="492.0" prefWidth="667.0" style="-fx-background-color: #00838F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <JFXButton fx:id="btnGuardarNuevoEmpleado" alignment="CENTER" layoutX="181.0" layoutY="381.0" onAction="#guardarNuevoEmpleado" prefHeight="50.0" prefWidth="230.0" style="-fx-background-color: white; -fx-background-radius: 10;" text="Guardar">
@@ -307,29 +301,47 @@
                            </font>
                         </JFXButton>
                      </children></Pane>
-                  <JFXScrollPane fx:id="vistaListadoEmpleados" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Pane fx:id="vistaHorariosPorEmpleado" layoutX="168.0" layoutY="156.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00838F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00838F;">
+                        <GridPane hgap="40.0" layoutX="30.0" layoutY="28.0" prefHeight="39.0" prefWidth="537.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.39996337890625" minWidth="10.0" prefWidth="145.39996337890625" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.5999633789062" minWidth="10.0" prefWidth="205.5999633789062" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="147.20001220703125" minWidth="10.0" prefWidth="104.40003662109376" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
                            <children>
-                              <GridPane fx:id="cuadriculaListadoPersonal" alignment="CENTER" hgap="5.0" layoutX="25.0" layoutY="28.0" prefHeight="90.0" prefWidth="555.0" vgap="10.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <Label fx:id="Nombre" alignment="CENTER" prefHeight="17.0" prefWidth="285.0" text="Nombre" />
-                                    <Label alignment="CENTER" prefHeight="17.0" prefWidth="326.0" text="Codigo de empleado" GridPane.columnIndex="1" />
-                                 </children>
-                              </GridPane>
+                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="180.0" text="Codigo de empleado">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="etCodigoEmpleadoVerHorarios" focusColor="WHITE" prefHeight="26.0" prefWidth="149.0" unFocusColor="#c7b7b7" GridPane.columnIndex="1" />
+                              <JFXButton fx:id="btnVerHorarios" onAction="#verHorariosPorEmpleado" prefHeight="34.0" prefWidth="101.0" style="-fx-background-color: white;" text="Mostrar" GridPane.columnIndex="2" />
                            </children>
-                        </Pane>
-                     </children>
-                  </JFXScrollPane>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </GridPane>
+                        <GridPane fx:id="gvListadoHorariosEmpleado" layoutX="71.0" layoutY="110.0" prefHeight="90.0" prefWidth="496.0" vgap="30.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                        <Label fx:id="lbCodEmpVerHorarios" alignment="CENTER" layoutX="91.0" layoutY="59.0" prefHeight="17.0" prefWidth="52.0" text=" ">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children></Pane>
                </children>
             </AnchorPane>
          </children>

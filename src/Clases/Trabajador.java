@@ -9,7 +9,7 @@ package Clases;
  *
  * @author dvdsa
  */
-public class Trabajador {
+public class Trabajador implements Comparable <Trabajador>{
     private String nombre, apellidos;
     private int numeroEmpleado;
 
@@ -29,6 +29,11 @@ public class Trabajador {
 
     public int getNumeroEmpleado() {
         return numeroEmpleado;
+    }
+
+    @Override
+    public int compareTo(Trabajador t) {
+        return apellidos.compareTo(t.apellidos);
     }
     
     
