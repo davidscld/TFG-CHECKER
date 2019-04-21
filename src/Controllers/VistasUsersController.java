@@ -70,6 +70,7 @@ public class VistasUsersController implements Initializable {
         } else {
             panelFirma.toFront();
         }
+        limpiarCampos();
     }
 
     @FXML

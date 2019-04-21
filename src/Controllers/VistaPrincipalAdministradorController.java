@@ -9,6 +9,8 @@ import Clases.GestorBD;
 import Clases.Horarios;
 import Clases.Intercambiadora;
 import Clases.Trabajador;
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.DocumentException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXScrollPane;
@@ -257,7 +259,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
     }
 
     @FXML
-    void generarPDF(ActionEvent event) throws SQLException, FileNotFoundException {
+    void generarPDF(ActionEvent event) throws SQLException, FileNotFoundException, DocumentException, BadElementException, IOException {
         gestorBD.crearPDFs();
     }
 

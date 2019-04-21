@@ -5,7 +5,7 @@
  */
 package Clases;
 
-
+import com.itextpdf.text.BadElementException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -20,8 +20,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import java.awt.Toolkit;
+import java.io.IOException;
+import java.sql.Blob;
 
 /**
  *
@@ -216,26 +222,52 @@ public class GestorBD {
             }
 
             if (resultadoConsultaSQL == 1) {
-                return true;
+                return RESULTADO_OK;
             } else {
-                return false;
+                return RESULTADO_KO;
 
             }
         } else {
-            return false;
+            return RESULTADO_KO;
         }
 
     }
 
-    public void crearPDFs() throws FileNotFoundException {
+    public void crearPDFs() throws FileNotFoundException, DocumentException, BadElementException, IOException {
+        String horaInicio, horaFin, fecha;
+        Image imagenFirma;
         comprobarSiExisteCodEmpleado(0);
         Collections.sort(listadoNumerosTrabajadores);
 
         for (int i = 0; i < listadoNumerosTrabajadores.size(); i++) {
-           //      Document pdf = new Document();
-            FileOutputStream ficheroPdf = new FileOutputStream("C:/Users/dvdsa/Desktop/PDFGenerados/firmas"+listadoNumerosTrabajadores.get(i)+".pdf");
-             // PdfWriter.getInstance(pdf,ficheroPdf).setInitialLeading(20);
-            //pdf.open();
+            Document pdf = new Document();
+            FileOutputStream ficheroPdf = new FileOutputStream("C:/Users/dvdsa/Desktop/PDFGenerados/firmas" + listadoNumerosTrabajadores.get(i) + ".pdf");
+            PdfWriter.getInstance(pdf, ficheroPdf).setInitialLeading(20);
+            pdf.open();
+
+            imagenFirma = conseguirImagenFirma(listadoNumerosTrabajadores.get(i));
+            imagenFirma.scaleToFit(50, 50);
+            
+            try {
+                conexion = DriverManager.getConnection(url, usuario, contrasenia);  //SIEMPRE IGUAL
+                st = conexion.createStatement();    //SIEMPRE IGUAL
+
+                //Cambiamos la sentenncia que vamos a ejecutar, este caso sera un UPDATE            
+                sentenciaSQL = "SELECT fecha, horaInicio, horaFin FROM " + NOMBRE_TABLA_HORARIOS + " WHERE numeroEmpleado = " + listadoNumerosTrabajadores.get(i) + " AND realizado IS NOT NULL;";
+                resultadoSelect = st.executeQuery(sentenciaSQL);
+                while (resultadoSelect.next()) {
+                    horaInicio = resultadoSelect.getString(2);
+                    fecha = resultadoSelect.getString(1);
+                    horaFin = resultadoSelect.getString(3);
+                    pdf.add(imagenFirma);
+                    pdf.add(new Paragraph("Fecha "+fecha+ " Hora inicio "+horaInicio+ " Hora fin "+horaFin));
+                }//while "hay mas datos"           
+                st.close(); //cerramos
+                conexion.close();   //cerramos
+
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
     }
@@ -261,8 +293,6 @@ public class GestorBD {
             Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-       
-
         return arrayListDatosTrabajadores;
     }
 
@@ -280,7 +310,6 @@ public class GestorBD {
             while (resultadoSelect.next()) {
                 horario = new Horarios(resultadoSelect.getString(2), resultadoSelect.getString(3), resultadoSelect.getString(1));
                 arrayListHorariosTrabajador.add(horario);
-               
 
             }//while "hay mas datos"            
             st.close(); //cerramos
@@ -292,5 +321,30 @@ public class GestorBD {
 
         return arrayListHorariosTrabajador;
 
+    }
+
+    private Image conseguirImagenFirma(Integer codEmpleado) throws BadElementException, IOException {
+        byte[] bytesFirma = null;
+        Image firma;
+        try {
+            conexion = DriverManager.getConnection(url, usuario, contrasenia);  //SIEMPRE IGUAL
+            st = conexion.createStatement();    //SIEMPRE IGUAL
+
+            //Cambiamos la sentenncia que vamos a ejecutar, este caso sera un UPDATE            
+            sentenciaSQL = "SELECT firma FROM " + NOMBRE_TABLA_TRBAJADORES + " WHERE numeroEmpleado = " + codEmpleado + ";";
+            resultadoSelect = st.executeQuery(sentenciaSQL);
+            
+            //bytesFirma
+                    Blob c = resultadoSelect.getBlob(1);//.getBytes(1, (int) resultadoSelect.getBlob(1).length());
+                    System.out.println(c);
+            st.close(); //cerramos
+            conexion.close();   //cerramos
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        firma = Image.getInstance(bytesFirma);
+        System.out.println(firma);
+        return firma;
     }
 }
