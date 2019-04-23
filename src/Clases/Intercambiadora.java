@@ -11,7 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 /**
- *
+ *Se encarga de ir carrgando las distintas vistas.
  * @author dvdsa
  */
 public class Intercambiadora {

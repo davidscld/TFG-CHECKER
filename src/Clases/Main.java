@@ -25,11 +25,15 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
+/**
+ * Inicializa la interfaz visual.
+ * @param stage
+ * @throws Exception 
+ */
     @Override
     public void start(Stage stage) throws Exception {
         ventana=stage;
-        ventana.setResizable(false);
+        ventana.setResizable(false);//Deshabilita la redimension de la pantalla
         intercambiadora = new Intercambiadora();
       //intercambiadora.cargarVistaInicial();
        intercambiadora.cargarVistaAdministrador();

@@ -54,7 +54,12 @@ public class VistasUsersController implements Initializable {
 
     @FXML
     private JFXButton btnVolverVistaFirma;
-
+/**
+ * Se ejecuta al pulsar el boton para acceder a la vista de administrador, comprueba si las credenciales son correctas y llama a la clase 
+ * intercambiadora para que cargue la vista correspondiente.
+ * @param event
+ * @throws IOException 
+ */
     @FXML
     void accederOpcionesAdministrador(ActionEvent event) throws IOException {
         if (etCodigoAdmin.getText().equals(USER) && etPassAdmin.getText().equals(PASS)) {
@@ -62,7 +67,10 @@ public class VistasUsersController implements Initializable {
             intercambiadora.cargarVistaAdministrador();
         }
     }
-
+/**
+ * Se encarga de intercambiar los diferentes paneles de la vista de usuarios
+ * @param event 
+ */
     @FXML
     void cargarVistaContraria(ActionEvent event) {
         if (event.getSource() == btnCargarVistaAdmin) {
@@ -72,7 +80,11 @@ public class VistasUsersController implements Initializable {
         }
         limpiarCampos();
     }
-
+/**
+ * Metodo llamado al pulsar el boton para realizar la firma, en el caso de que se pueda realizar la firma se limpia el campo,
+ * si no se puede el campo quedara sin borrar
+ * @param event 
+ */
     @FXML
     void realizarFirmaUsuario(ActionEvent event) {
         int codigoEmpFirma = Integer.parseInt(etCodigoEmpleadoVistaFirma.getText());
@@ -87,7 +99,9 @@ public class VistasUsersController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-
+/**
+ * Limpia todos los campos de texto 
+ */
     private void limpiarCampos() {
         etPassAdmin.setText("");
         etCodigoEmpleadoVistaFirma.setText("");

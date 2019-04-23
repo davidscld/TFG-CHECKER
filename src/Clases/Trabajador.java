@@ -30,7 +30,11 @@ public class Trabajador implements Comparable <Trabajador>{
     public int getNumeroEmpleado() {
         return numeroEmpleado;
     }
-
+/**
+ * Ordena los trabajadores por sus apellidos, en minuscula
+ * @param t
+ * @return ArrayList de trabajadores ordenados
+ */
     @Override
     public int compareTo(Trabajador t) {
         return apellidos.toLowerCase().compareTo(t.apellidos.toLowerCase());

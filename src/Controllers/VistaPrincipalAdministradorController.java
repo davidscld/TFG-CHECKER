@@ -13,31 +13,24 @@ import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.DocumentException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXScrollPane;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
-import java.awt.Color;
-import java.awt.Font;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ResourceBundle;
-import java.util.Timer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -167,6 +160,14 @@ public class VistaPrincipalAdministradorController implements Initializable {
     @FXML
     private Label lbCodEmpVerHorarios;
 
+    /**
+     * Lanza un selecctor de archivos para que se pueda buscar la imagen de la
+     * firma correspondiente al empleado que se quiere dar de alta Tiene un
+     * filtro para que solo se puedan elegir elementos -jpg,png-
+     *
+     * @param event
+     * @throws FileNotFoundException
+     */
     @FXML
     void buscarImagenFirma(ActionEvent event) throws FileNotFoundException {
         int seleccion;
@@ -182,6 +183,13 @@ public class VistaPrincipalAdministradorController implements Initializable {
 
     }
 
+    /**
+     * Cambia el submenu central dependiendo de la opcion que hayamos elegido en
+     * el panel lateral izquierdo.
+     *
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void cargarMenuCentral(ActionEvent event) throws IOException {
         if (event.getSource() == btnEmpleados) {
@@ -195,6 +203,11 @@ public class VistaPrincipalAdministradorController implements Initializable {
         }
     }
 
+    /**
+     * Alternar entre los diferentes paneles que componen el submenu de horarios
+     *
+     * @param event
+     */
     @FXML
     void cargarVistasHorarios(ActionEvent event) {
         limpiarCampos();
@@ -208,6 +221,11 @@ public class VistaPrincipalAdministradorController implements Initializable {
         }
     }
 
+    /**
+     * Alternar entre los diferentes paneles que componen el submenu de personal
+     *
+     * @param event
+     */
     @FXML
     void cargarVistasPersonal(ActionEvent event) {
         limpiarCampos();
@@ -221,7 +239,11 @@ public class VistaPrincipalAdministradorController implements Initializable {
             vistaListadoEmpleados.toFront();
         }
     }
-
+/**
+ * Al acceder al pande Eliminar empleado, pulsando el boton de eliminar se recogen los datos necesarios y si se consigue eliminar el empleado
+ * los campos rellenados se vacian
+ * @param event 
+ */
     @FXML
     void eliminarEmpleado(ActionEvent event) {
 
@@ -229,7 +251,10 @@ public class VistaPrincipalAdministradorController implements Initializable {
             limpiarCampos();
         }
     }
-
+/**
+ * Se ejecuta al pulsar el boton para eliminar el horario, si se consigue eliminar se limpian los campos rellenos de este panel
+ * @param event 
+ */
     @FXML
     void eliminarHorario(ActionEvent event) {
 
@@ -238,7 +263,11 @@ public class VistaPrincipalAdministradorController implements Initializable {
         }
 
     }
-
+/**
+ * Se ejecuta al pulsar el boton para dar de alta a un nuevo empleado, si se consigue dar de alta se eliminan los campos rellenos
+ * @param event
+ * @throws SQLException 
+ */
     @FXML
     void guardarNuevoEmpleado(ActionEvent event) throws SQLException {
 
@@ -246,7 +275,10 @@ public class VistaPrincipalAdministradorController implements Initializable {
             limpiarCampos();
         }
     }
-
+/**
+ * Se ejecuta al dar un nuevo horario a un trabajador, si se puede realizar se eliminan los campos rellenos
+ * @param event 
+ */
     @FXML
     void guardarNuevoHorario(ActionEvent event) {
 
@@ -257,7 +289,15 @@ public class VistaPrincipalAdministradorController implements Initializable {
         }
 
     }
-
+/**
+ * Al pulsar el boton del submenu generara los pdf necesarios.
+ * @param event
+ * @throws SQLException
+ * @throws FileNotFoundException
+ * @throws DocumentException
+ * @throws BadElementException
+ * @throws IOException 
+ */
     @FXML
     void generarPDF(ActionEvent event) throws SQLException, FileNotFoundException, DocumentException, BadElementException, IOException {
         gestorBD.crearPDFs();
@@ -267,7 +307,9 @@ public class VistaPrincipalAdministradorController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-
+/**
+ * Se encarga de limpiar todos los campos
+ */
     private void limpiarCampos() {
         etApellidosEmpleado.setText("");
         etCodigoEmpleadoEliminar.setText("");
@@ -281,7 +323,11 @@ public class VistaPrincipalAdministradorController implements Initializable {
         dpFechaNuevoHorario.getEditor().clear();
 
     }
-
+/**
+ * Realiza una consulta a la base de datos y con los resultados devueltos rellena una vista con todos los horarios que le corresponden a un 
+ * empleado buscando por el codigo de empleado
+ * @param event 
+ */
     @FXML
     void verHorariosPorEmpleado(ActionEvent event) {
         int codigoUsuarioBuscarHorarios = Integer.parseInt(etCodigoEmpleadoVerHorarios.getText());
@@ -310,7 +356,10 @@ public class VistaPrincipalAdministradorController implements Initializable {
         }
 
     }
-
+/**
+ * Rellena la vista del listado de los empleados con la cosulta realizada para obtener todos los empleados de la base de datos, 
+ * mostrara primero apellidos por orden alfabetico luego el nombre y por otro lado su codigo de empleado.
+ */
     private void rellenarVistaListado() {
 
         cuadriculaListadoPersonal.getChildren().removeAll(cuadriculaListadoPersonal.getChildren());
