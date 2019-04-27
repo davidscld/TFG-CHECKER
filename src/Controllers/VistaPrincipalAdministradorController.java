@@ -103,7 +103,13 @@ public class VistaPrincipalAdministradorController implements Initializable {
     private Pane vistaNuevoEmpleado;
 
     @FXML
+    private Pane panelGenerarPDF;
+
+    @FXML
     private JFXButton btnGuardarNuevoEmpleado;
+
+    @FXML
+    private JFXTextField etRutaPDF;
 
     @FXML
     private JFXTextField etNombreEmpleado;
@@ -182,7 +188,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             rutaImagen = buscadorFirmas.getSelectedFile().getAbsolutePath();
             image = new File(rutaImagen);
-            tamImagenFirma= (int) image.length();
+            tamImagenFirma = (int) image.length();
             imagenFirma = new FileInputStream(image);
         }
 
@@ -203,6 +209,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
             menuHorarios.toFront();
         } else if (event.getSource() == btnPDF) {
             panelVacioPDF.toFront();
+            panelGenerarPDF.toFront();
         } else {
             intercambiadora.cargarVistaInicial();
         }
@@ -326,7 +333,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
      */
     @FXML
     void generarPDF(ActionEvent event) throws SQLException, FileNotFoundException, DocumentException, BadElementException, IOException {
-        gestorBD.crearPDFs();
+        gestorBD.crearPDFs(etRutaPDF.getText());
     }
 
     @Override

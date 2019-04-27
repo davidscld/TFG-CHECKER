@@ -299,7 +299,7 @@ public class GestorBD {
      * @throws BadElementException
      * @throws IOException
      */
-    public void crearPDFs() throws FileNotFoundException, DocumentException, BadElementException, IOException, SQLException {
+    public void crearPDFs(String ruta) throws FileNotFoundException, DocumentException, BadElementException, IOException, SQLException {
         String horaInicio, horaFin, fecha;
         String nombre = null;
         Image imagenFirma;
@@ -326,7 +326,7 @@ public class GestorBD {
                 }
 
                 Document pdf = new Document();
-                FileOutputStream ficheroPdf = new FileOutputStream("C:/Users/dvdsa/Desktop/PDFGenerados/Firmas " + nombre + " "+listadoNumerosTrabajadores.get(i)+".pdf");
+                FileOutputStream ficheroPdf = new FileOutputStream(ruta + "/" + nombre + " " + listadoNumerosTrabajadores.get(i) + ".pdf");
                 PdfWriter.getInstance(pdf, ficheroPdf).setInitialLeading(20);
                 pdf.open();
 

@@ -49,16 +49,7 @@
             </VBox>
             <AnchorPane prefHeight="492.0" prefWidth="141.0" style="-fx-background-color: #009688;">
                <children>
-                  <Pane fx:id="panelVacioPDF" prefHeight="492.0" prefWidth="141.0" style="-fx-background-color: #263238;">
-                     <children>
-                        <JFXButton layoutY="144.0" lineSpacing="2.0" onAction="#generarPDF" prefHeight="244.0" prefWidth="141.0" text="Generar" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold Italic" size="18.0" />
-                           </font>
-                        </JFXButton>
-                        <Icons525View glyphName="CIRCLE_DOWNLOAD" layoutX="38.0" layoutY="222.0" size="70.0" wrappingWidth="51.999993324279785" />
-                     </children>
-                  </Pane>
+                  <Pane fx:id="panelVacioPDF" prefHeight="492.0" prefWidth="141.0" style="-fx-background-color: #263238;" />
                   <VBox fx:id="menuHorarios" alignment="CENTER" layoutX="60.0" layoutY="146.0" prefHeight="200.0" prefWidth="149.0" spacing="60.0" style="-fx-background-color: #263238;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <padding>
                         <Insets left="10.0" />
@@ -290,6 +281,16 @@
                               <Font size="14.0" />
                            </font></JFXButton>
                      </children></Pane>
+                  <Pane fx:id="panelGenerarPDF" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <JFXTextField fx:id="etRutaPDF" alignment="CENTER" focusColor="BLACK" layoutX="180.0" layoutY="157.0" prefHeight="25.0" prefWidth="266.0" promptText="Ruta" unFocusColor="BLACK" />
+                        <JFXButton layoutX="244.0" layoutY="266.0" onAction="#generarPDF" prefHeight="34.0" prefWidth="139.0" style="-fx-border-color: black; -fx-background-color: white; -fx-border-radius: 10;" text="Generar">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </Pane>
                   <Pane fx:id="vistaNuevoEmpleado" layoutX="188.0" layoutY="176.0" prefHeight="492.0" prefWidth="667.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <JFXButton fx:id="btnGuardarNuevoEmpleado" alignment="CENTER" layoutX="181.0" layoutY="381.0" onAction="#guardarNuevoEmpleado" prefHeight="50.0" prefWidth="230.0" style="-fx-background-color: white; -fx-border-radius: 10; -fx-border-color: black;" text="Guardar">
