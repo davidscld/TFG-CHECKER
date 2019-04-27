@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="490.0" prefWidth="815.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.VistasUsersController">
    <children>
-      <Pane fx:id="panelAdministrador" layoutX="10.0" layoutY="10.0" prefHeight="228.0" prefWidth="256.0" style="-fx-background-color: #cddc39;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane fx:id="panelAdministrador" layoutX="10.0" layoutY="10.0" prefHeight="228.0" prefWidth="256.0" style="-fx-background-color: #263238;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
           
             <VBox layoutX="283.0" layoutY="19.0" prefHeight="454.0" prefWidth="250.0" spacing="50.0" style="-fx-background-color: #4DB6AC;">
@@ -71,19 +71,19 @@
                </graphic></JFXButton>
          </children>
       </Pane>
-      <Pane fx:id="panelFirma" layoutX="252.0" layoutY="117.0" prefHeight="228.0" prefWidth="256.0" style="-fx-background-color: #cddc39;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane fx:id="panelFirma" layoutX="252.0" layoutY="117.0" prefHeight="228.0" prefWidth="256.0" style="-fx-background-color: #263238;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
 
-            <VBox layoutX="283.0" layoutY="19.0" prefHeight="441.0" prefWidth="250.0" spacing="70.0" style="-fx-background-color: #FFB300;">
+            <VBox layoutX="283.0" layoutY="19.0" prefHeight="441.0" prefWidth="250.0" spacing="70.0" style="-fx-background-color: #81C784;">
                <children>
-                  <MaterialDesignIconView glyphName="MARKER_CHECK" size="150.0" wrappingWidth="148.79998779296875">
+                  <MaterialDesignIconView fill="#100101" glyphName="MARKER_CHECK" size="150.0" wrappingWidth="148.79998779296875">
                      <VBox.margin>
                         <Insets left="50.0" top="10.0" />
                      </VBox.margin>
                   </MaterialDesignIconView>
                   <HBox prefHeight="64.0" prefWidth="249.0">
                      <children>
-                        <MaterialDesignIconView glyphName="ACCOUNT_CHECK" size="50.0" wrappingWidth="65.5999755859375">
+                        <MaterialDesignIconView fill="#100101" glyphName="ACCOUNT_CHECK" size="50.0" wrappingWidth="65.5999755859375">
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" />
                            </HBox.margin>
@@ -106,7 +106,7 @@
                <opaqueInsets>
                   <Insets />
                </opaqueInsets></VBox>
-            <JFXButton fx:id="btnCargarVistaAdmin" layoutX="679.0" layoutY="14.0" onAction="#cargarVistaContraria" prefHeight="25.0" prefWidth="123.0" style="-fx-background-color: #e6ee9c;" text="Administrador">
+            <JFXButton fx:id="btnCargarVistaAdmin" layoutX="679.0" layoutY="14.0" onAction="#cargarVistaContraria" prefHeight="25.0" prefWidth="123.0" style="-fx-background-color: white;" text="Administrador">
                <graphic>
                   <Icons525View glyphName="KEY" size="15.0" />
                </graphic>
