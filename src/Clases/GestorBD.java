@@ -25,7 +25,6 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
-import java.awt.Toolkit;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
@@ -300,8 +299,9 @@ public class GestorBD {
      * @throws BadElementException
      * @throws IOException
      */
-    public void crearPDFs() throws FileNotFoundException, DocumentException, BadElementException, IOException {
+    public void crearPDFs() throws FileNotFoundException, DocumentException, BadElementException, IOException, SQLException {
         String horaInicio, horaFin, fecha;
+        String nombre = null;
         Image imagenFirma;
         comprobarSiExisteCodEmpleado(0);
         Collections.sort(listadoNumerosTrabajadores);
@@ -309,26 +309,45 @@ public class GestorBD {
         for (int i = 0; i < listadoNumerosTrabajadores.size(); i++) {
             if (comprobarSiTrabajadorHorarios(listadoNumerosTrabajadores.get(i))) {
 
+                try {
+                    conexion = DriverManager.getConnection(url, usuario, contrasenia);
+                    st = conexion.createStatement();
+                    resultadoSelect = st.executeQuery("SELECT nombre, apellidos FROM " + NOMBRE_TABLA_TRBAJADORES + " WHERE numeroEmpleado = " + listadoNumerosTrabajadores.get(i) + " LIMIT 1;");
+                    while (resultadoSelect.next()) {
+                        nombre = resultadoSelect.getString(1);
+                        nombre += " " + resultadoSelect.getString(2);
+                    }
+
+                    st.close();
+                    conexion.close();
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
                 Document pdf = new Document();
-                FileOutputStream ficheroPdf = new FileOutputStream("C:/Users/dvdsa/Desktop/PDFGenerados/firmas" + listadoNumerosTrabajadores.get(i) + ".pdf");
+                FileOutputStream ficheroPdf = new FileOutputStream("C:/Users/dvdsa/Desktop/PDFGenerados/Firmas " + nombre + " "+listadoNumerosTrabajadores.get(i)+".pdf");
                 PdfWriter.getInstance(pdf, ficheroPdf).setInitialLeading(20);
                 pdf.open();
 
                 imagenFirma = conseguirImagenFirma(listadoNumerosTrabajadores.get(i));
                 imagenFirma.scaleToFit(50, 50);
 
+                pdf.add(new Paragraph(nombre));
+                pdf.add(new Paragraph(" "));
                 try {
                     conexion = DriverManager.getConnection(url, usuario, contrasenia);
                     st = conexion.createStatement();
-
                     sentenciaSQL = "SELECT fecha, horaInicio, horaFin FROM " + NOMBRE_TABLA_HORARIOS + " WHERE numeroEmpleado = " + listadoNumerosTrabajadores.get(i) + " AND realizado IS NOT NULL;";
                     resultadoSelect = st.executeQuery(sentenciaSQL);
                     while (resultadoSelect.next()) {
                         horaInicio = resultadoSelect.getString(2);
                         fecha = resultadoSelect.getString(1);
                         horaFin = resultadoSelect.getString(3);
+
+                        pdf.addCreationDate();
+                        pdf.add(new Paragraph("Fecha " + fecha + " --- Hora inicio " + horaInicio + " --- Hora fin " + horaFin));
                         pdf.add(imagenFirma);
-                        pdf.add(new Paragraph("Fecha " + fecha + " Hora inicio " + horaInicio + " Hora fin " + horaFin));
                     }
                     st.close();
                     conexion.close();
@@ -440,16 +459,26 @@ public class GestorBD {
         return firma;
     }
 
-    private boolean comprobarSiTrabajadorHorarios(int codEmp) {
-        resultadoSelect = null;
+    /**
+     * Hago una consulta para saber que empleados tienen horarios que ya han
+     * sido cumplidos, elijo cualquier valor para la consulta si este valor se
+     * me devuelve es que el empleado tiene horarios hechos, si es nulo es que
+     * aun no ha hecho nunca ningun horario.
+     *
+     * @param codEmp
+     * @return
+     * @throws SQLException
+     */
+    private boolean comprobarSiTrabajadorHorarios(int codEmp) throws SQLException {
+        String existe = null;
         try {
             conexion = DriverManager.getConnection(url, usuario, contrasenia);
             st = conexion.createStatement();
 
-            sentenciaSQL = "SELECT * FROM " + NOMBRE_TABLA_HORARIOS + " WHERE numeroEmpleado = " + codEmp + " AND realizado IS NOT NULL LIMIT 1;";
+            sentenciaSQL = "SELECT numeroEmpleado FROM " + NOMBRE_TABLA_HORARIOS + " WHERE numeroEmpleado = " + codEmp + " AND realizado IS NOT NULL LIMIT 1;";
             resultadoSelect = st.executeQuery(sentenciaSQL);
             while (resultadoSelect.next()) {
-
+                existe = resultadoSelect.getString(1);
             }
             st.close();
             conexion.close();
@@ -457,6 +486,7 @@ public class GestorBD {
         } catch (SQLException ex) {
             Logger.getLogger(GestorBD.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return resultadoSelect != null;
+
+        return existe != null;
     }
 }
