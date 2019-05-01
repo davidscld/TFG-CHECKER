@@ -6,6 +6,8 @@
 package Clases;
 
 import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -22,6 +24,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
@@ -29,9 +33,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.PreparedStatement;
+import javax.swing.JFileChooser;
 
 /**
- *
+ * Gestiona todas las conexione y consultas a la base de datos.
  * @author dvdsa
  */
 public class GestorBD {
@@ -65,8 +70,8 @@ public class GestorBD {
      * asignada a la que nosotros le estamos pasando y elimina dicho horario, no
      * tiene en cuenta la hora, pues solo puede haber un horario por dia
      *
-     * @param codigoTrabajador
-     * @param fecha
+     * @param codigoTrabajador es el codigo por el que voy a eliminar el horario
+     * @param fecha en la que voy a eliminar el horario
      * @return consulta ok/ko;
      */
     public boolean eliminarHorarioTrabajador(int codigoTrabajador, Date fecha) {
@@ -99,10 +104,10 @@ public class GestorBD {
      * de que este existe, le pone un nuevo rango horario para firmar en un dia
      * en concreto
      *
-     * @param codigoTrabajador
-     * @param horaInicio
-     * @param horaFin
-     * @param fecha
+     * @param codigoTrabajador es el codigo del trabajador al que se le va a asignar un nuevo horario
+     * @param horaInicio hora por la que empezara la jornada
+     * @param horaFin hora de fin de la jornada
+     * @param fecha de la jornada
      * @return consulta ok/ko
      */
     public boolean nuevoHorarioTrabajador(int codigoTrabajador, Time horaInicio, Time horaFin, Date fecha) {
@@ -141,12 +146,12 @@ public class GestorBD {
      * comprueba si este existe dentro de la base de datos, para que no se
      * repita
      *
-     * @param nombre
-     * @param apellido
-     * @param imagenFirma
-     * @param tam
+     * @param nombre del trabajador
+     * @param apellido del trabajador
+     * @param imagenFirma imagen de la firma del trabajador
+     * @param tam tamaño que tiene la imagen de la firma, necesario para guardalo en la BD
      * @return cosulta ok/ko
-     * @throws SQLException
+     * @throws SQLException excepcion de SQL erroneo
      */
     public boolean darAltaTrabajador(String nombre, String apellido, FileInputStream imagenFirma, int tam) throws SQLException {
         int codigoEmpleado;
@@ -176,7 +181,7 @@ public class GestorBD {
      * Buscando por el codigo de trabajador introducido encuentra el trabajador
      * que le corresponde y elimna todos sus datos de la base.
      *
-     * @param codigoTrabajador
+     * @param codigoTrabajador codigo del trbajador que se va a dar de baja
      * @return consulta ok/ko
      */
     public boolean darBajaTrabajador(int codigoTrabajador) {
@@ -235,8 +240,8 @@ public class GestorBD {
      * el ArrayList se retorna true para que se de alta ese numero generado, si
      * se encuentra se retorna false y se vuelve a realizar el mismo proceso.
      *
-     * @param codigoComprobar
-     * @return
+     * @param codigoComprobar codigo de emepleao que le envio al metodo y que se va a usar para comprobar si existe ya existe
+     * @return retorna si el codigo de empleado existe en la BD
      */
     public boolean comprobarSiExisteCodEmpleado(int codigoComprobar) {
         if (listadoNumerosTrabajadores == null) {
@@ -257,8 +262,8 @@ public class GestorBD {
      * caso de que la persona que con el codigo de empleado recogido por el
      * metodo, tenga un un horario fijado para el dia que realiza la firma.
      *
-     * @param codEmpFirma
-     * @return
+     * @param codEmpFirma codigo del empleado que a realizado la firma de que ha realizado su jornada
+     * @return retorna si se ha podido realizar la firma del empleado en su horario
      */
     public boolean realizarFirma(int codEmpFirma) {
         if (comprobarSiExisteCodEmpleado(codEmpFirma)) {
@@ -294,24 +299,28 @@ public class GestorBD {
      * Se encarga de crear un pdf por cada empleado que constara de su nombre y
      * todos los horarios que haya hecho con su respectiva fecha y firma.
      *
-     * @throws FileNotFoundException
-     * @throws DocumentException
-     * @throws BadElementException
-     * @throws IOException
+     * @param ruta donde se van a crear los PDF
+     * @throws FileNotFoundException excepcion de archivo no encontrado
+     * @throws DocumentException excepcion de documento corrupto
+     * @throws BadElementException excepcion de elmento erroneo introducido en PDF
+     * @throws IOException error de entrada/salida
+     * @throws java.sql.SQLException expcecion SQL
      */
     public void crearPDFs(String ruta) throws FileNotFoundException, DocumentException, BadElementException, IOException, SQLException {
         String horaInicio, horaFin, fecha;
-        String nombre = null;
+        String nombre = null; //ruta = obtenerRuta();
+
         Image imagenFirma;
         comprobarSiExisteCodEmpleado(0);
         Collections.sort(listadoNumerosTrabajadores);
 
         for (int i = 0; i < listadoNumerosTrabajadores.size(); i++) {
-            if (comprobarSiTrabajadorHorarios(listadoNumerosTrabajadores.get(i))) {
+            if (comprobarSiTrabajadorHorarios(listadoNumerosTrabajadores.get(i))) {//Compuebo si el trabajador ha realizado algun horario ya
 
                 try {
                     conexion = DriverManager.getConnection(url, usuario, contrasenia);
                     st = conexion.createStatement();
+                    //Busco el nombre y los apellidos del trabajador por su codigo, para poder ponerlo en el PDF
                     resultadoSelect = st.executeQuery("SELECT nombre, apellidos FROM " + NOMBRE_TABLA_TRBAJADORES + " WHERE numeroEmpleado = " + listadoNumerosTrabajadores.get(i) + " LIMIT 1;");
                     while (resultadoSelect.next()) {
                         nombre = resultadoSelect.getString(1);
@@ -332,8 +341,12 @@ public class GestorBD {
 
                 imagenFirma = conseguirImagenFirma(listadoNumerosTrabajadores.get(i));
                 imagenFirma.scaleToFit(50, 50);
-
-                pdf.add(new Paragraph(nombre));
+                imagenFirma.setAlignment(Chunk.ALIGN_CENTER);//Centro el parrafo
+                Paragraph datosEmp = new Paragraph(nombre, FontFactory.getFont("arial",22,Font.BOLD,BaseColor.BLACK));//Doy estilo al parrafo
+                
+                datosEmp.setAlignment(Paragraph.ALIGN_CENTER);
+                datosEmp.setSpacingAfter(10);
+                pdf.add(datosEmp);
                 pdf.add(new Paragraph(" "));
                 try {
                     conexion = DriverManager.getConnection(url, usuario, contrasenia);
@@ -344,9 +357,10 @@ public class GestorBD {
                         horaInicio = resultadoSelect.getString(2);
                         fecha = resultadoSelect.getString(1);
                         horaFin = resultadoSelect.getString(3);
-
                         pdf.addCreationDate();
-                        pdf.add(new Paragraph("Fecha " + fecha + " --- Hora inicio " + horaInicio + " --- Hora fin " + horaFin));
+                        Paragraph horarios = new Paragraph("Fecha " + fecha + " --- Hora inicio " + horaInicio + " --- Hora fin " + horaFin);
+                        horarios.setAlignment(Paragraph.ALIGN_CENTER);
+                        pdf.add(horarios);
                         pdf.add(imagenFirma);
                     }
                     st.close();
@@ -394,7 +408,7 @@ public class GestorBD {
      * Metodo utilizado para mostrar todos los horarios que no hayan sido
      * realizados aun por un trabajador, buscando por su codigo.
      *
-     * @param codigoUsuarioBuscarHorarios
+     * @param codigoUsuarioBuscarHorarios codigo del usuario que vamos a usar para buscar sus horarios sin realizar
      * @return ArrayList con los horarios del empleado elegido
      */
     public ArrayList<Horarios> rellenarListadoHorariosTrabajador(int codigoUsuarioBuscarHorarios) {
@@ -427,7 +441,7 @@ public class GestorBD {
      * Usando el codigo de empleado realiza una consulta para buscar la firma
      * que le corresponde
      *
-     * @param codEmpleado
+     * @param codEmpleado codigo del empleado del que vamos a recuperar la firma de la BD
      * @return Imagen de firma
      * @throws BadElementException
      * @throws IOException
@@ -444,7 +458,7 @@ public class GestorBD {
             resultadoSelect = st.executeQuery(sentenciaSQL);
             while (resultadoSelect.next()) {
                 imagenBlob = resultadoSelect.getBlob(1);
-                bytesFirma = imagenBlob.getBytes(1, (int) imagenBlob.length());
+                bytesFirma = imagenBlob.getBytes(1, (int) imagenBlob.length());//Contrsutye la imagen a partir de los bytes almacenados en la BD
                 firma = Image.getInstance(bytesFirma);
             }
 
@@ -465,7 +479,7 @@ public class GestorBD {
      * me devuelve es que el empleado tiene horarios hechos, si es nulo es que
      * aun no ha hecho nunca ningun horario.
      *
-     * @param codEmp
+     * @param codEmp codigoo de empleado que vamos a usar para saber si ese empleado tiene horarios creados sin realizar
      * @return
      * @throws SQLException
      */
@@ -489,4 +503,18 @@ public class GestorBD {
 
         return existe != null;
     }
+
+    private String obtenerRuta() {
+        
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            
+            return ""+chooser.getCurrentDirectory();
+        }
+        return null;
+    }
+
 }

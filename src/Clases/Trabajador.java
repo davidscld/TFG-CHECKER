@@ -6,7 +6,7 @@
 package Clases;
 
 /**
- *
+ * Objeto Trabajador usado para poder almacenar los datos de los trabajadores
  * @author dvdsa
  */
 public class Trabajador implements Comparable <Trabajador>{
@@ -32,7 +32,7 @@ public class Trabajador implements Comparable <Trabajador>{
     }
 /**
  * Ordena los trabajadores por sus apellidos, en minuscula
- * @param t
+ * @param t objeto trabajador que recivo para compararlo con otro y asi ordenarlos
  * @return ArrayList de trabajadores ordenados
  */
     @Override

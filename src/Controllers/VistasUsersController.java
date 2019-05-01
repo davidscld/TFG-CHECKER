@@ -20,7 +20,7 @@ import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
- *
+ *Contrlador de las dos vistas inciales, tanto de la de firma como la de acceso de administrador
  * @author 6001231
  */
 public class VistasUsersController implements Initializable {

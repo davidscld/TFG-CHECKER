@@ -37,7 +37,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * FXML Controller class
- *
+ * Contraldor de todas las vistas que componen la parte del administrador
  * @author dvdsa
  */
 public class VistaPrincipalAdministradorController implements Initializable {
@@ -182,13 +182,13 @@ public class VistaPrincipalAdministradorController implements Initializable {
         File image;
         String rutaImagen;
         JFileChooser buscadorFirmas = new JFileChooser();
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("jpg", "png", "JPG", "PNG");
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("jpg", "png", "JPG", "PNG");//Ponemos un filtro para que solo pueda escoger estos tipos de archivos
         buscadorFirmas.setFileFilter(filtro);
         seleccion = buscadorFirmas.showOpenDialog(buscadorFirmas);
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             rutaImagen = buscadorFirmas.getSelectedFile().getAbsolutePath();
             image = new File(rutaImagen);
-            tamImagenFirma = (int) image.length();
+            tamImagenFirma = (int) image.length();//Obtengo el tamaño de la imagen
             imagenFirma = new FileInputStream(image);
         }
 
@@ -313,7 +313,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
         java.sql.Time horaInicio = java.sql.Time.valueOf(tpHoraInicio.getValue());
         java.sql.Time horaFin = java.sql.Time.valueOf(tpHoraFin.getValue());
         java.sql.Date fecha = java.sql.Date.valueOf(dpFechaNuevoHorario.getValue());
-        if (codigo != null && horaInicio != null && horaFin != null && fecha != null) {
+        if (codigo != null && horaInicio != null && horaFin != null && fecha != null) {//Si ningun dato es nulo se procede a realizar
             if (gestorBD.nuevoHorarioTrabajador(Integer.parseInt(codigo), horaInicio, horaFin, fecha)) {
                 limpiarCampos();
             }
@@ -355,6 +355,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
         tpHoraInicio.getEditor().clear();
         dpFechaEliminarHorario.getEditor().clear();
         dpFechaNuevoHorario.getEditor().clear();
+        etRutaPDF.setText("");
 
     }
 
@@ -379,10 +380,10 @@ public class VistaPrincipalAdministradorController implements Initializable {
             gvListadoHorariosEmpleado.add(etiquetaFecha, 0, 0);
             gvListadoHorariosEmpleado.add(etiquetaHorarios, 1, 0);
             for (int i = 0; i < datosHorariosPorTrabajador.size(); i++) {
-
+                //Muestra la fecha del horario
                 Label nombre = new Label(datosHorariosPorTrabajador.get(i).getFecha());
                 gvListadoHorariosEmpleado.add(nombre, 0, (i + 1));
-
+                //Muestra los horarios correspondientes a una fecha
                 Label codigo = new Label(datosHorariosPorTrabajador.get(i).getHoraInicio() + " -- " + datosHorariosPorTrabajador.get(i).getHoraFin());
                 gvListadoHorariosEmpleado.add(codigo, 1, (i + 1));
             }
@@ -402,7 +403,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
      */
     private void rellenarVistaListado() {
 
-        cuadriculaListadoPersonal.getChildren().removeAll(cuadriculaListadoPersonal.getChildren());
+        cuadriculaListadoPersonal.getChildren().removeAll(cuadriculaListadoPersonal.getChildren());//Limpia todos los elemetos de la cuadricula
         Label etiquetaNombre = new Label("APELLIDOS NOMBRE");
         etiquetaNombre.setStyle("-fx-font-weight: bold");
         Label etiquetaCodigo = new Label("CODIGO");
@@ -413,10 +414,10 @@ public class VistaPrincipalAdministradorController implements Initializable {
         datosTrabajadores = gestorBD.rellenarListadoTrabajadores();
         Collections.sort(datosTrabajadores);
         for (int i = 0; i < datosTrabajadores.size(); i++) {
-
+            //Pone los apellidos y nombre del empleado
             Label nombre = new Label(datosTrabajadores.get(i).getApellidos() + " - " + datosTrabajadores.get(i).getNombre());
             cuadriculaListadoPersonal.add(nombre, 0, (i + 1));
-
+            //Pone el codigo del empleado junto al apellidos y nombre
             Label codigo = new Label("" + datosTrabajadores.get(i).getNumeroEmpleado());
             cuadriculaListadoPersonal.add(codigo, 1, (i + 1));
         }

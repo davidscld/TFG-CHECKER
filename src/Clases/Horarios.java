@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 /**
- *
+ *  Objeto usado para almacenar los datos de los horarios de cada trabajador
  * @author dvdsa
  */
 public class Horarios {
