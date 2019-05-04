@@ -35,8 +35,8 @@ public class Main extends Application {
         ventana = stage;
         ventana.setResizable(false);//Deshabilita la redimension de la pantalla
         intercambiadora = new Intercambiadora();
-        //intercambiadora.cargarVistaInicial();
-         intercambiadora.cargarVistaAdministrador();
+        intercambiadora.cargarVistaInicial();
+         
 
     }
 

@@ -272,7 +272,8 @@ public class GestorBD {
                 conexion = DriverManager.getConnection(url, usuario, contrasenia);
                 st = conexion.createStatement();
 
-                sentenciaSQL = "UPDATE " + NOMBRE_TABLA_HORARIOS + " SET realizado =  1 WHERE numeroEmpleado = " + codEmpFirma + " AND fecha = DATE(NOW());";
+                sentenciaSQL = "UPDATE "+NOMBRE_TABLA_HORARIOS+" SET realizado = 1 WHERE numeroEmpleado = "+codEmpFirma+" AND fecha = DATE(NOW())"
+                        + " AND Cast(TIME(CURRENT_TIMESTAMP()) as int) BETWEEN Cast(horaInicio as int) and Cast(horaFin as int);";
 
                 resultadoConsultaSQL = st.executeUpdate(sentenciaSQL);
 
