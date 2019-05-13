@@ -36,8 +36,9 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
- * FXML Controller class
- * Contraldor de todas las vistas que componen la parte del administrador
+ * FXML Controller class Contraldor de todas las vistas que componen la parte
+ * del administrador
+ *
  * @author dvdsa
  */
 public class VistaPrincipalAdministradorController implements Initializable {
@@ -261,9 +262,11 @@ public class VistaPrincipalAdministradorController implements Initializable {
      */
     @FXML
     void eliminarEmpleado(ActionEvent event) {
+        if (!etCodigoEmpleadoEliminar.getText().equals("")) {
 
-        if (gestorBD.darBajaTrabajador(Integer.parseInt(etCodigoEmpleadoEliminar.getText()))) {//Si se ha eliminado bien el empleado
-            limpiarCampos();
+            if (gestorBD.darBajaTrabajador(Integer.parseInt(etCodigoEmpleadoEliminar.getText()))) {//Si se ha eliminado bien el empleado
+                limpiarCampos();
+            }
         }
     }
 
@@ -275,11 +278,11 @@ public class VistaPrincipalAdministradorController implements Initializable {
      */
     @FXML
     void eliminarHorario(ActionEvent event) {
-
-        if (gestorBD.eliminarHorarioTrabajador(Integer.parseInt(etCodigoEmpleadoEliminarHorario.getText()), java.sql.Date.valueOf(dpFechaEliminarHorario.getValue()))) {
-            limpiarCampos();
+        if (!etCodigoEmpleadoEliminarHorario.getText().equals("") && dpFechaEliminarHorario.getValue() != null) {
+            if (gestorBD.eliminarHorarioTrabajador(Integer.parseInt(etCodigoEmpleadoEliminarHorario.getText()), java.sql.Date.valueOf(dpFechaEliminarHorario.getValue()))) {
+                limpiarCampos();
+            }
         }
-
     }
 
     /**
@@ -293,7 +296,7 @@ public class VistaPrincipalAdministradorController implements Initializable {
     void guardarNuevoEmpleado(ActionEvent event) throws SQLException {
         String nombre = etNombreEmpleado.getText();
         String apellidos = etApellidosEmpleado.getText();
-        if (nombre != null && apellidos != null) {
+        if (!nombre.equals("") && !apellidos.equals("")) {
             if (gestorBD.darAltaTrabajador(nombre, apellidos, imagenFirma, tamImagenFirma)) {
                 limpiarCampos();
             }
@@ -310,10 +313,11 @@ public class VistaPrincipalAdministradorController implements Initializable {
     @FXML
     void guardarNuevoHorario(ActionEvent event) {
         String codigo = etCodigoEmpleadoNuevoHorario.getText();
+        
         java.sql.Time horaInicio = java.sql.Time.valueOf(tpHoraInicio.getValue());
         java.sql.Time horaFin = java.sql.Time.valueOf(tpHoraFin.getValue());
         java.sql.Date fecha = java.sql.Date.valueOf(dpFechaNuevoHorario.getValue());
-        if (codigo != null && horaInicio != null && horaFin != null && fecha != null) {//Si ningun dato es nulo se procede a realizar
+        if (!codigo.equals("") && horaInicio != null && horaFin != null && fecha != null) {//Si ningun dato es nulo se procede a realizar
             if (gestorBD.nuevoHorarioTrabajador(Integer.parseInt(codigo), horaInicio, horaFin, fecha)) {
                 limpiarCampos();
             }
@@ -333,7 +337,10 @@ public class VistaPrincipalAdministradorController implements Initializable {
      */
     @FXML
     void generarPDF(ActionEvent event) throws SQLException, FileNotFoundException, DocumentException, BadElementException, IOException {
-        gestorBD.crearPDFs(etRutaPDF.getText());
+        if (!etRutaPDF.getText().equals("")) {
+
+            gestorBD.crearPDFs(etRutaPDF.getText());
+        }
     }
 
     @Override
@@ -368,31 +375,34 @@ public class VistaPrincipalAdministradorController implements Initializable {
      */
     @FXML
     void verHorariosPorEmpleado(ActionEvent event) {
-        int codigoUsuarioBuscarHorarios = Integer.parseInt(etCodigoEmpleadoVerHorarios.getText());
+        if (!etCodigoEmpleadoVerHorarios.getText().equals("")) {
 
-        gvListadoHorariosEmpleado.getChildren().removeAll(gvListadoHorariosEmpleado.getChildren());
+            int codigoUsuarioBuscarHorarios = Integer.parseInt(etCodigoEmpleadoVerHorarios.getText());
 
-        datosHorariosPorTrabajador.clear();
-        datosHorariosPorTrabajador = gestorBD.rellenarListadoHorariosTrabajador(codigoUsuarioBuscarHorarios);
-        if (!datosHorariosPorTrabajador.isEmpty()) {
-            Label etiquetaFecha = new Label("FECHA");
-            Label etiquetaHorarios = new Label("HORARIOS");
-            gvListadoHorariosEmpleado.add(etiquetaFecha, 0, 0);
-            gvListadoHorariosEmpleado.add(etiquetaHorarios, 1, 0);
-            for (int i = 0; i < datosHorariosPorTrabajador.size(); i++) {
-                //Muestra la fecha del horario
-                Label nombre = new Label(datosHorariosPorTrabajador.get(i).getFecha());
-                gvListadoHorariosEmpleado.add(nombre, 0, (i + 1));
-                //Muestra los horarios correspondientes a una fecha
-                Label codigo = new Label(datosHorariosPorTrabajador.get(i).getHoraInicio() + " -- " + datosHorariosPorTrabajador.get(i).getHoraFin());
-                gvListadoHorariosEmpleado.add(codigo, 1, (i + 1));
+            gvListadoHorariosEmpleado.getChildren().removeAll(gvListadoHorariosEmpleado.getChildren());
+
+            datosHorariosPorTrabajador.clear();
+            datosHorariosPorTrabajador = gestorBD.rellenarListadoHorariosTrabajador(codigoUsuarioBuscarHorarios);
+            if (!datosHorariosPorTrabajador.isEmpty()) {
+                Label etiquetaFecha = new Label("FECHA");
+                Label etiquetaHorarios = new Label("HORARIOS");
+                gvListadoHorariosEmpleado.add(etiquetaFecha, 0, 0);
+                gvListadoHorariosEmpleado.add(etiquetaHorarios, 1, 0);
+                for (int i = 0; i < datosHorariosPorTrabajador.size(); i++) {
+                    //Muestra la fecha del horario
+                    Label nombre = new Label(datosHorariosPorTrabajador.get(i).getFecha());
+                    gvListadoHorariosEmpleado.add(nombre, 0, (i + 1));
+                    //Muestra los horarios correspondientes a una fecha
+                    Label codigo = new Label(datosHorariosPorTrabajador.get(i).getHoraInicio() + " -- " + datosHorariosPorTrabajador.get(i).getHoraFin());
+                    gvListadoHorariosEmpleado.add(codigo, 1, (i + 1));
+                }
+                lbCodEmpVerHorarios.setText("" + codigoUsuarioBuscarHorarios);
+                limpiarCampos();
+            } else {
+                lbCodEmpVerHorarios.setText("");
             }
-            lbCodEmpVerHorarios.setText("" + codigoUsuarioBuscarHorarios);
-            limpiarCampos();
-        } else {
-            lbCodEmpVerHorarios.setText("");
-        }
 
+        }
     }
 
     /**

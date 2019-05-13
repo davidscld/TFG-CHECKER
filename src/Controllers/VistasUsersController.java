@@ -28,6 +28,7 @@ public class VistasUsersController implements Initializable {
     private final String USER = "Residencia", PASS = "Ledesma";
     private Intercambiadora intercambiadora = new Intercambiadora();
     private GestorBD gestorBD = new GestorBD();
+    
     @FXML
     private Pane panelFirma;
 
@@ -60,6 +61,7 @@ public class VistasUsersController implements Initializable {
  * @param event
  * @throws IOException 
  */
+    
     @FXML
     void accederOpcionesAdministrador(ActionEvent event) throws IOException {
         if (etCodigoAdmin.getText().equals(USER) && etPassAdmin.getText().equals(PASS)) {
@@ -87,10 +89,12 @@ public class VistasUsersController implements Initializable {
  */
     @FXML
     void realizarFirmaUsuario(ActionEvent event) {
-        int codigoEmpFirma = Integer.parseInt(etCodigoEmpleadoVistaFirma.getText());
-
-        if (gestorBD.realizarFirma(codigoEmpFirma)) {
-            limpiarCampos();
+        if(!etCodigoEmpleadoVistaFirma.getText().equals("")){
+        
+            int codigoEmpFirma = Integer.parseInt(etCodigoEmpleadoVistaFirma.getText());
+            if (gestorBD.realizarFirma(codigoEmpFirma)) {
+                limpiarCampos();
+            }
         }
 
     }
@@ -103,9 +107,9 @@ public class VistasUsersController implements Initializable {
  * Limpia todos los campos de texto 
  */
     private void limpiarCampos() {
-        etPassAdmin.setText("");
-        etCodigoEmpleadoVistaFirma.setText("");
-        etCodigoAdmin.setText("");
+        etPassAdmin.setText(null);
+        etCodigoEmpleadoVistaFirma.setText(null);
+        etCodigoAdmin.setText(null);
     }
 
 }
