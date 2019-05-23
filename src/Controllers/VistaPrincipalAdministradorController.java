@@ -15,6 +15,8 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
+import de.jensd.fx.glyphs.icons525.Icons525View;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,6 +34,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -42,7 +45,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author dvdsa
  */
 public class VistaPrincipalAdministradorController implements Initializable {
-
+     private final String colorIconosPulsados = "#ef5350";
+    private final String colorInicialBotonres = "#004d40";
     private Intercambiadora intercambiadora = new Intercambiadora();
     private GestorBD gestorBD = new GestorBD();
     private FileInputStream imagenFirma;
@@ -58,6 +62,16 @@ public class VistaPrincipalAdministradorController implements Initializable {
     @FXML
     private JFXButton btnPDF;
 
+        @FXML
+    private MaterialDesignIconView imagenOpcionPersonal;
+
+    @FXML
+    private Icons525View imagenOpcionPDF;
+
+    @FXML
+    private MaterialDesignIconView imagenOpcionHorarios;
+
+    
     @FXML
     private JFXButton btnSalir;
 
@@ -202,13 +216,18 @@ public class VistaPrincipalAdministradorController implements Initializable {
      * @param event
      * @throws IOException
      */
+  
     @FXML
     void cargarMenuCentral(ActionEvent event) throws IOException {
+        devolverColorBotones();  
         if (event.getSource() == btnEmpleados) {
+            imagenOpcionPersonal.setFill(Color.valueOf(colorIconosPulsados));
             menuPersonal.toFront();
         } else if (event.getSource() == btnHorarios) {
+            imagenOpcionHorarios.setFill(Color.valueOf(colorIconosPulsados));
             menuHorarios.toFront();
         } else if (event.getSource() == btnPDF) {
+            imagenOpcionPDF.setFill(Color.valueOf(colorIconosPulsados));
             panelVacioPDF.toFront();
             panelGenerarPDF.toFront();
         } else {
@@ -432,6 +451,12 @@ public class VistaPrincipalAdministradorController implements Initializable {
             cuadriculaListadoPersonal.add(codigo, 1, (i + 1));
         }
 
+    }
+      private void devolverColorBotones() {
+     
+       imagenOpcionPDF.setFill(Color.valueOf(colorInicialBotonres));
+       imagenOpcionHorarios.setFill(Color.valueOf(colorInicialBotonres)); 
+       imagenOpcionPersonal.setFill(Color.valueOf(colorInicialBotonres));
     }
 
 }

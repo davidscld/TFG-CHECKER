@@ -27,17 +27,17 @@
                <children>
                   <JFXButton fx:id="btnEmpleados" onAction="#cargarMenuCentral" prefHeight="30.0" prefWidth="80.0" text=" ">
                      <graphic>
-                        <MaterialDesignIconView fill="#004d40" glyphName="ACCOUNT_BOX" size="35.0" />
+                        <MaterialDesignIconView fx:id="imagenOpcionPersonal" fill="#ef5350" glyphName="ACCOUNT_BOX" size="35.0" />
                      </graphic>
                   </JFXButton>
                   <JFXButton fx:id="btnHorarios" onAction="#cargarMenuCentral" prefHeight="30.0" prefWidth="80.0" text=" ">
                      <graphic>
-                        <MaterialDesignIconView fill="#004d40" glyphName="ALARM_CHECK" size="35.0" />
+                        <MaterialDesignIconView fx:id="imagenOpcionHorarios" fill="#004d40" glyphName="ALARM_CHECK" size="35.0" />
                      </graphic>
                   </JFXButton>
                   <JFXButton fx:id="btnPDF" onAction="#cargarMenuCentral" prefHeight="30.0" prefWidth="80.0" text=" ">
                      <graphic>
-                        <Icons525View fill="#004d40" glyphName="FILE_PDF" size="35.0" />
+                        <Icons525View fx:id="imagenOpcionPDF" fill="#004d40" glyphName="FILE_PDF" size="35.0" />
                      </graphic>
                   </JFXButton>
                   <JFXButton fx:id="btnSalir" onAction="#cargarMenuCentral" prefHeight="30.0" prefWidth="81.0" text=" ">
